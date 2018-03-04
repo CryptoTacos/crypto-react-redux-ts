@@ -2,5 +2,24 @@
     .crypto-market-cap-row {
         display: flex;
         align-content: space-between;
-    }    
+        width: 700px;
+        .crypto-market-cap-col {
+            width: 20%;
+            &-header {
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            &-item {
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            &-icon {
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
+            }
+        }
+    }
 }

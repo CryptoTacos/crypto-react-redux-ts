@@ -1,0 +1,1 @@
+const btc =  require('./svg/icon/btc.svg');

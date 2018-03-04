@@ -1,65 +1,92 @@
 
 import * as React from 'react';
-import images from '../icons/cryptoCoinsIcons';
 const cryptocurrencies = require('cryptocurrencies');
+
+// const PATH_TO_COLOR_COIN_ICONS = '../icons/coins/color/';
+// const PATH_TO_BLACK_COIN_ICONS = '../icons/coins/black/';
+// const SVG = '.svg';
 
 class CryptoMarketCapList extends React.Component {
 
-    getCryptoMarketCapIcon(value: string): JSX.Element {
-        console.log('trying to set value of component = ' + value);
+    // tslint:disable-next-line:no-any
+    getCryptoMarketCapIcon(icon: any): JSX.Element {
         return (
-            <img src={images[value]} style={{ width: '20%' }} />
+            <img className="crypto-market-cap-col-icon" src={icon} />
         );
     }
 
     getCryptoMarketCapSymbol(value: string) {
         return (
-            <span style={{ width: '20%' }}>{value}</span>
+            <span className="crypto-market-cap-col-item">{value}</span>
         );
     }
 
     getCryptoName(value: string): JSX.Element {
         return (
-            <span style={{ width: '20%' }}>{value}</span>
+            <span className="crypto-market-cap-col-item">{value}</span>
         );
     }
 
     getCryptoMarketCapValue(value: string): JSX.Element {
         return (
-            <div style={{ width: '20%' }}>
-                {'market cap value'}
-            </div>
+            <span className="crypto-market-cap-col-item">{value}</span>
         );
     }
 
     getCryptoMarketCapChange(value: string): JSX.Element {
         return (
-            <div style={{ paddingLeft: '20px' }}>
-                {'market cap change %'}
-            </div>
+            <span className="crypto-market-cap-col-item">{value}</span>
         );
     }
 
     getCryptoMarketCapRow(cryptoSymbol: string, cryptoName: string): JSX.Element {
-        return (
-            <div className={'crypto-market-cap-row'}>
-                {this.getCryptoMarketCapIcon(cryptoSymbol)}
-                {this.getCryptoMarketCapSymbol(cryptoSymbol)}
-                {this.getCryptoName(cryptoName)}
-                {this.getCryptoMarketCapValue('')}
-                {this.getCryptoMarketCapChange('')}
-            </div>
-        );
+        let cryptoRow: JSX.Element;
+        try {
+            const cryptoIcon = require('../icons/coins/color/' + cryptoSymbol.toLowerCase() + '.svg');
+            cryptoRow = (
+                <div className={'crypto-market-cap-row'}>
+                    <div className="crypto-market-cap-col">
+                        {this.getCryptoMarketCapIcon(cryptoIcon)}
+                    </div>
+                    <div className="crypto-market-cap-col">
+                        {this.getCryptoMarketCapSymbol(cryptoSymbol)}
+                    </div>
+                    <div className="crypto-market-cap-col">
+                        {this.getCryptoName(cryptoName)}
+                    </div>
+                    <div className="crypto-market-cap-col">
+                        {this.getCryptoMarketCapValue('')}
+                    </div>
+                    <div className="crypto-market-cap-col">
+                        {this.getCryptoMarketCapChange('')}
+                    </div>
+                </div>
+            );
+        } catch (error) {
+            console.error(error);
+            cryptoRow = (<i />);
+        }
+        return cryptoRow;
     }
 
     getCrytpoMarketCapTableHeader(): JSX.Element {
         return (
             <div className={'crypto-market-cap-row'}>
-                <h2 style={{ width: '20%' }}>{'Crypto Icon'}</h2>
-                <h2 style={{ width: '20%' }}>{'Crypto Symbol'}</h2>
-                <h2 style={{ width: '20%' }}>{'Crypto Name'}</h2>
-                <h2 style={{ width: '20%' }}>{'Market Cap Value'}</h2>
-                <h2 style={{ width: '20%' }}>{'Market Cap % Change'}</h2>
+                <div className="crypto-market-cap-col">
+                    <h2 className="crypto-market-cap-col-item">{'Crypto Icon'}</h2>
+                </div>
+                <div className="crypto-market-cap-col">
+                    <h2 className="crypto-market-cap-col-item">{'Crypto Symbol'}</h2>
+                </div>
+                <div className="crypto-market-cap-col">
+                    <h2 className="crypto-market-cap-col-item">{'Crypto Name'}</h2>
+                </div>
+                <div className="crypto-market-cap-col">
+                    <h2 className="crypto-market-cap-col-item">{'Market Cap Value'}</h2>
+                </div>
+                <div className="crypto-market-cap-col">
+                    <h2 className="crypto-market-cap-col-item">{'Market Cap % Change'}</h2>
+                </div>
             </div>
         );
     }
