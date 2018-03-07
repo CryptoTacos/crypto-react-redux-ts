@@ -1,10 +1,8 @@
 import * as React from 'react';
-import './Scss/App.scss';
-// import 'font-awesome';
-// import 'cryptocoins-icons';
-import MarketCapList from '..//containers/MarketCapList';
+import '../Scss/App.scss';
+import MarketCapList from '../containers/MarketCapList';
 const logo = require('../icons/logo.svg');
-const btc = require('./icons/coins/color/btc.svg');
+const btc = require('../icons/coins/color/btc.svg');
 
 function App() {
   return (
