@@ -1,13 +1,11 @@
 import MarketCapList from '../components/MarketCapList';
 import * as actions from '../actions/cryptoMarketCapListActions';
-import { StoreState } from '../types';
+import { StoreState, FlattenedCoinData } from '../types';
 import { connect, Dispatch } from 'react-redux';
 
 interface StateFromProps {
     title: string;
-    cryptos: string[];
-    // tslint:disable-next-line:no-any
-    coinData: any[];
+    coinData: FlattenedCoinData[];
 }
 interface DispatchFromProps {
     onClick: () => void;
@@ -15,7 +13,6 @@ interface DispatchFromProps {
 
 const mapStateToProps = (state: StoreState): StateFromProps => ({
     title: state.cryptoMarketCapListState.title,
-    cryptos: state.cryptoMarketCapListState.cryptos,
     coinData: state.cryptoMarketCapListState.coinData,
 });
 

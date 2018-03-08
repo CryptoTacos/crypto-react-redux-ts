@@ -1,78 +1,86 @@
 import * as React from 'react';
+import { FlattenedCoinData } from '../types';
 const cryptocurrencies = require('cryptocurrencies');
 
 export interface Props {
-    cryptos: string[];
-    // tslint:disable-next-line:no-any
-    coinData: any;
+    coinData: FlattenedCoinData[];
     onClick?: () => void;
     title: string;
 }
 
-function MarketCapList({ cryptos, coinData, onClick, title }: Props) {
+function MarketCapList({ coinData, onClick, title }: Props) {
+
+    const getCoinPriceCol = (coinTicker: string): JSX.Element => {
+        const coin: FlattenedCoinData | undefined = coinData.find(element => element.name === coinTicker);
+        return (
+            <span className={coin ? 'item ' + coin.style : 'item'}>
+                {coin ? coin.USD.PRICE : 'Price Not Found'}
+            </span>
+        );
+    };
 
     const getCryptoMarketCapIcon = (icon: string): JSX.Element => {
         return (
-            <img
-                className="crypto-market-cap-col-icon"
-                src={icon}
-                onClick={onClick}
-            />
+            <div className="item">
+                <img
+                    className="icon"
+                    src={icon}
+                    onClick={onClick}
+                />
+            </div>
         );
     };
 
     const getCryptoMarketCapSymbol = (value: string) => {
         return (
-            <span className="crypto-market-cap-col-item">{value}</span>
+            <span className="item">{value}</span>
         );
     };
 
     const getCryptoName = (value: string): JSX.Element => {
         return (
-            <span className="crypto-market-cap-col-item">{value}</span>
+            <span className="item">{value}</span>
         );
     };
 
     const getTotalSupply = (coinTicker: string): JSX.Element => {
-        const findVal = () => {
-            try {
-                return coinData[coinTicker.toUpperCase()] ?
-                    coinData[coinTicker.toUpperCase()].TotalCoinSupply : 'Total Supply Not Found';
-
-            } catch (error) {
-                return 'Total Supply Not Found';
-            }
-        };
+        const coin: FlattenedCoinData | undefined = coinData.find(element => element.name === coinTicker);
         return (
-            <span className="crypto-market-cap-col-item">{
-                findVal()
-            }</span>
+            <span className="item">
+                {coin ? coin.USD.SUPPLY : 'Supply Not Found'}
+            </span>
         );
     };
 
-    const getCryptoMarketCapChange = (value: string): JSX.Element => {
+    const getCryptoMarketCapChange = (coinTicker: string): JSX.Element => {
+        const coin: FlattenedCoinData | undefined = coinData.find(element => element.name === coinTicker);
         return (
-            <span className="crypto-market-cap-col-item">{value}</span>
+            <span className="item">
+                {coin ? coin.USD.MKTCAP : 'Market Cap Not Found'}
+            </span>
         );
     };
 
     const CryptoMarketCapListTableHeader = (): JSX.Element => {
         return (
-            <div className={'crypto-market-cap-row'}>
-                <div className="crypto-market-cap-col">
-                    <h2 className="crypto-market-cap-col-item">{'Crypto Icon'}</h2>
+            <div className={'flexrow'}>
+                <div className="flexcol">
+                    <h2 className="item">{''}</h2>
                 </div>
-                <div className="crypto-market-cap-col">
-                    <h2 className="crypto-market-cap-col-item">{'Crypto Symbol'}</h2>
+                <div className="flexcol">
+                    <h2 className="item">{'Ticker'}</h2>
                 </div>
-                <div className="crypto-market-cap-col">
-                    <h2 className="crypto-market-cap-col-item">{'Crypto Name'}</h2>
+                <div className="flexcol">
+                    <h2 className="item">{'Full Name'}</h2>
                 </div>
-                <div className="crypto-market-cap-col">
-                    <h2 className="crypto-market-cap-col-item">{'Total Supply'}</h2>
+                <div className="flexcol">
+                    <h2 className="item">{'Total Supply'}</h2>
                 </div>
-                <div className="crypto-market-cap-col">
-                    <h2 className="crypto-market-cap-col-item">{'Market Cap % Change'}</h2>
+                <div className="flexcol">
+                    <h2 className="item">{'Current Price'}</h2>
+                </div>
+                <div className="flexcol">
+                    <h2 className="item">{'Market Cap'}</h2>
                 </div>
             </div>
         );
@@ -83,25 +91,30 @@ function MarketCapList({ cryptos, coinData, onClick, title }: Props) {
         try {
             const cryptoIcon = require('../icons/coins/color/' + cryptoSymbol.toLowerCase() + '.svg');
             cryptoRow = (
-                <div className={'crypto-market-cap-row'} key={key}>
-                    <div className="crypto-market-cap-col">
+                <div className={'flexrow'} key={key}>
+                    <div className=" flexcol">
                         {getCryptoMarketCapIcon(cryptoIcon)}
                     </div>
-                    <div className="crypto-market-cap-col">
+                    <div className="flexcol">
                         {getCryptoMarketCapSymbol(cryptoSymbol)}
                     </div>
-                    <div className="crypto-market-cap-col">
+                    <div className="flexcol">
                         {getCryptoName(cryptoName)}
                     </div>
-                    <div className="crypto-market-cap-col">
+                    <div className="flexcol">
                         {getTotalSupply(cryptoSymbol)}
                     </div>
-                    <div className="crypto-market-cap-col">
-                        {getCryptoMarketCapChange('')}
+                    <div className="flexcol">
+                        {getCoinPriceCol(cryptoSymbol)}
                     </div>
+                    <div className="flexcol">
+                        {getCryptoMarketCapChange(cryptoSymbol)}
+                    </div>
+
                 </div>
             );
         } catch (error) {
+            console.log(error);
             return null;
         }
         return cryptoRow;
@@ -111,13 +124,12 @@ function MarketCapList({ cryptos, coinData, onClick, title }: Props) {
         const cryptoRows: JSX.Element[] = [];
         let keyIterator = 0;
         let newRow;
-        for (const cryptoSymbol of cryptos) {
-            newRow = getCryptoMarketCapRow(cryptoSymbol, cryptocurrencies[cryptoSymbol], keyIterator);
+        for (const coin of coinData) {
+            newRow = getCryptoMarketCapRow(coin.name, cryptocurrencies[coin.name], keyIterator);
             if (newRow) {
                 cryptoRows.push(newRow);
                 keyIterator = keyIterator + 1;
             }
-
         }
         return cryptoRows;
 

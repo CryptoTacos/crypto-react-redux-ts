@@ -14,7 +14,6 @@ const initialState: CryptoMarketCapListState = {
 const cryptoMarketCapList = (state = initialState, action: CryptoMarketCapListAction): CryptoMarketCapListState => {
     switch (action.type) {
         case SELECT_COIN_ICON:
-            console.log('woah there');
             return {
                 ...state,
                 title: 'HI'

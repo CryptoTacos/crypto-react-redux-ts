@@ -8,10 +8,15 @@ import App from './components/App';
 import store from './store';
 import { getCoinData, setAvailableCoinData } from './actions/cryptoMarketCapListActions';
 
-console.log(store.getState());
-
 store.dispatch(setAvailableCoinData());
-store.dispatch(getCoinData());
+
+const fetchLatestMarketData = () => {
+  store.dispatch(getCoinData(store.getState().cryptoMarketCapListState.cryptos));
+};
+
+setInterval(fetchLatestMarketData, 10000);
+
+fetchLatestMarketData();
 
 ReactDOM.render(
   <Provider store={store}>

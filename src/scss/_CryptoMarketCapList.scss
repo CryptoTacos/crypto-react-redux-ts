@@ -1,26 +1,63 @@
 .crypto-market-cap-list {
-    .crypto-market-cap-row {
+    .flexrow {
         display: flex;
-        align-content: space-between;
-        width: 700px;
-        padding-bottom: 15px;
-        .crypto-market-cap-col {
-            width: 20%;
-            &-header {
-                display: block;
-                margin-left: auto;
-                margin-right: auto;
-            }
-            &-item {
-                display: block;
-                margin-left: auto;
-                margin-right: auto;
-            }
-            &-icon {
-                display: block;
-                margin-left: auto;
-                margin-right: auto;
-            }
+        flex-direction: row;
+        justify-content: space-between;
+        flex-grow: 0;
+        flex-basis: 250px;
+    }
+    .flexcol {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        flex-grow: 0;
+        flex-basis: 25%;
+    }
+    .item {
+        justify-content: center;
+        margin: auto;
+        .icon{
+            display: block;
+            margin: auto;
         }
+    }
+
+
+    @keyframes green-to-red {
+        0%   {background-color: green;}
+        25%  {background-color: darkgreen;}
+        50%  {background-color: darkred;}
+        100% {background-color: red;}
+    }
+
+    @keyframes red-to-green {
+        0%   {background-color: red;}
+        25%  {background-color: darkred;}
+        50%  {background-color: darkgreen;}
+        100% {background-color: green;}
+    }
+
+    .greenticker{
+        text-align: center;
+        color: white;
+        background: green;
+        width: 70%;
+        height: 85%;
+        justify-content: center;
+        animation-name: red-to-green;
+        animation-duration: 1s;
+    }
+    .greenticker:hover{
+
+    }
+    .redticker{
+        text-align: center;
+        color: white;
+        background: red;
+        width: 70%;
+        height: 85%;
+        justify-content: center;
+        animation-name: green-to-red;
+        animation-duration: 1s;
     }
 }
