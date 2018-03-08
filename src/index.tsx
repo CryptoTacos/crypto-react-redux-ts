@@ -6,8 +6,12 @@ import './Scss/index.scss';
 import './Scss/App.scss';
 import App from './components/App';
 import store from './store';
+import { getCoinData, setAvailableCoinData } from './actions/cryptoMarketCapListActions';
 
 console.log(store.getState());
+
+store.dispatch(setAvailableCoinData());
+store.dispatch(getCoinData());
 
 ReactDOM.render(
   <Provider store={store}>

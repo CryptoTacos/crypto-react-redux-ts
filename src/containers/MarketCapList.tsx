@@ -6,8 +6,9 @@ import { connect, Dispatch } from 'react-redux';
 interface StateFromProps {
     title: string;
     cryptos: string[];
+    // tslint:disable-next-line:no-any
+    coinData: any[];
 }
-
 interface DispatchFromProps {
     onClick: () => void;
 }
@@ -15,6 +16,7 @@ interface DispatchFromProps {
 const mapStateToProps = (state: StoreState): StateFromProps => ({
     title: state.cryptoMarketCapListState.title,
     cryptos: state.cryptoMarketCapListState.cryptos,
+    coinData: state.cryptoMarketCapListState.coinData,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<actions.CryptoMarketCapListAction>): DispatchFromProps => ({

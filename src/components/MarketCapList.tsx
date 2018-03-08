@@ -3,11 +3,13 @@ const cryptocurrencies = require('cryptocurrencies');
 
 export interface Props {
     cryptos: string[];
+    // tslint:disable-next-line:no-any
+    coinData: any;
     onClick?: () => void;
     title: string;
 }
 
-function MarketCapList({ cryptos, onClick, title }: Props) {
+function MarketCapList({ cryptos, coinData, onClick, title }: Props) {
 
     const getCryptoMarketCapIcon = (icon: string): JSX.Element => {
         return (
@@ -31,9 +33,20 @@ function MarketCapList({ cryptos, onClick, title }: Props) {
         );
     };
 
-    const getCryptoMarketCapValue = (value: string): JSX.Element => {
+    const getTotalSupply = (coinTicker: string): JSX.Element => {
+        const findVal = () => {
+            try {
+                return coinData[coinTicker.toUpperCase()] ?
+                    coinData[coinTicker.toUpperCase()].TotalCoinSupply : 'Total Supply Not Found';
+
+            } catch (error) {
+                return 'Total Supply Not Found';
+            }
+        };
         return (
-            <span className="crypto-market-cap-col-item">{value}</span>
+            <span className="crypto-market-cap-col-item">{
+                findVal()
+            }</span>
         );
     };
 
@@ -56,7 +69,7 @@ function MarketCapList({ cryptos, onClick, title }: Props) {
                     <h2 className="crypto-market-cap-col-item">{'Crypto Name'}</h2>
                 </div>
                 <div className="crypto-market-cap-col">
-                    <h2 className="crypto-market-cap-col-item">{'Market Cap Value'}</h2>
+                    <h2 className="crypto-market-cap-col-item">{'Total Supply'}</h2>
                 </div>
                 <div className="crypto-market-cap-col">
                     <h2 className="crypto-market-cap-col-item">{'Market Cap % Change'}</h2>
@@ -81,7 +94,7 @@ function MarketCapList({ cryptos, onClick, title }: Props) {
                         {getCryptoName(cryptoName)}
                     </div>
                     <div className="crypto-market-cap-col">
-                        {getCryptoMarketCapValue('')}
+                        {getTotalSupply(cryptoSymbol)}
                     </div>
                     <div className="crypto-market-cap-col">
                         {getCryptoMarketCapChange('')}
