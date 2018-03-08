@@ -3,7 +3,7 @@ import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import AppBar from 'material-ui/AppBar';
-import '../Scss/App.scss';
+import '../scss/App.scss';
 import MarketCapList from '../containers/MarketCapList';
 import MarketCapButtonRow from './MarketCapButtonRow';
 // const logo = require('../icons/logo.svg');
