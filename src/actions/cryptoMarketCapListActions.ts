@@ -84,7 +84,7 @@ export const getCoinData = (availableCoins: string[]) =>
             const coinDataResponse: CoinDataResponse = prices[keys[i]];
 
             if (coinDataResponse.USD.LASTVOLUME !== 0) {
-                sortedPriceArray.push(Object.assign({ name: keys[i], style: '' }, coinDataResponse));
+                sortedPriceArray.push(Object.assign({ name: keys[i], style: 'nochangeticker' }, coinDataResponse));
             } else { continue; }
         }
 

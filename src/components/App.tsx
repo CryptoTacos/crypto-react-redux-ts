@@ -5,7 +5,7 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import AppBar from 'material-ui/AppBar';
 import '../scss/App.scss';
 import MarketCapList from '../containers/MarketCapList';
-import MarketCapButtonRow from './MarketCapButtonRow';
+import MarketCapButtonRow from '../containers/MarketCapButtonRow';
 // const logo = require('../icons/logo.svg');
 const btc = require('../icons/coins/color/btc.svg');
 

@@ -20,8 +20,6 @@ const mapDispatchToProps = (dispatch: Dispatch<actions.CryptoMarketCapListAction
     onClick: () => dispatch(actions.selectCoinIcon())
 });
 
-console.log(mapStateToProps);
-
 export default connect<StateFromProps, DispatchFromProps, {}>(
     mapStateToProps, mapDispatchToProps
 )(MarketCapList);

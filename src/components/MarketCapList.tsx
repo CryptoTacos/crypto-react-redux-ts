@@ -64,7 +64,7 @@ function MarketCapList({ coinData, onClick, title }: Props) {
     const CryptoMarketCapListTableHeader = (): JSX.Element => {
         return (
             <div className={'flexrow'}>
-                <div className="flexcol">
+                <div className="flexcol-icon">
                     <h2 className="item">{''}</h2>
                 </div>
                 <div className="flexcol">
@@ -92,7 +92,7 @@ function MarketCapList({ coinData, onClick, title }: Props) {
             const cryptoIcon = require('../icons/coins/color/' + cryptoSymbol.toLowerCase() + '.svg');
             cryptoRow = (
                 <div className={'flexrow'} key={key}>
-                    <div className=" flexcol">
+                    <div className="flexcol-icon">
                         {getCryptoMarketCapIcon(cryptoIcon)}
                     </div>
                     <div className="flexcol">

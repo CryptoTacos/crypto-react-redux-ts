@@ -1,12 +1,12 @@
 
 import { MenuBarState } from '../types';
-import { MenuBarAction } from '../actions/menuBarActions';
+import { MarketCapMenuBarAction } from '../actions/marketCapButtonRowActions';
 
 const initialState: MenuBarState = {
     title: 'Welcome to the Crypto App'
 };
 
-const cryptoMenuBar = (state = initialState, action: MenuBarAction) => {
+const cryptoMenuBar = (state = initialState, action: MarketCapMenuBarAction) => {
     switch (action.type) {
 
         default:

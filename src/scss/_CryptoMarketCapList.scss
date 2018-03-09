@@ -5,59 +5,96 @@
         justify-content: space-between;
         flex-grow: 0;
         flex-basis: 250px;
+        height: 80px;
+        width: 65%
     }
     .flexcol {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
         flex-grow: 0;
-        flex-basis: 25%;
-    }
-    .item {
-        justify-content: center;
-        margin: auto;
-        .icon{
-            display: block;
-            margin: auto;
+        flex-basis: 20%;
+        &-icon{
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            flex-grow: 0;
+            flex-basis: 10%;
         }
     }
 
-
-    @keyframes green-to-red {
-        0%   {background-color: green;}
-        25%  {background-color: darkgreen;}
-        50%  {background-color: darkred;}
-        100% {background-color: red;}
-    }
-
-    @keyframes red-to-green {
-        0%   {background-color: red;}
-        25%  {background-color: darkred;}
-        50%  {background-color: darkgreen;}
-        100% {background-color: green;}
-    }
-
-    .greenticker{
-        text-align: center;
-        color: white;
-        background: green;
-        width: 70%;
-        height: 85%;
+    .item {
         justify-content: center;
-        animation-name: red-to-green;
-        animation-duration: 1s;
+        margin: auto;
+        .icon {
+            display: block;
+            margin: auto;
+            width: 65px;
+            height: auto;
+        }
     }
-    .greenticker:hover{
+}
 
+@keyframes green-to-red {
+    0% {
+        border: 1px solid green;
     }
-    .redticker{
-        text-align: center;
-        color: white;
-        background: red;
-        width: 70%;
-        height: 85%;
-        justify-content: center;
-        animation-name: green-to-red;
-        animation-duration: 1s;
+    25% {
+        border: 1px solid darkgreen;
     }
+    50% {
+        border: 1px solid darkred;
+    }
+    100% {
+        border: 1px solid red;
+    }
+}
+
+@keyframes red-to-green {
+    0% {
+        border: 1px solid red;
+    }
+    25% {
+        border: 1px solid darkred;
+    }
+    50% {
+        border: 1px solid darkgreen;
+    }
+    100% {
+        border: 1px solid green;
+    }
+}
+
+.greenticker {
+    line-height: 70px;
+    text-align: center;
+    color: green;
+    border: 1px solid green;
+    width: 70%;
+    height: 85%;
+    justify-content: center;
+    animation-name: red-to-green;
+    animation-duration: 2s;
+}
+
+.redticker {
+    line-height: 70px;
+    text-align: center;
+    color: red;
+    border: 1px solid red;
+    width: 70%;
+    height: 85%;
+    justify-content: center;
+    animation-name: green-to-red;
+    animation-duration: 2s;
+}
+
+.nochangeticker {
+    line-height: 70px;
+    text-align: center;
+    color: black;
+    border: 1px solid black;
+    width: 70%;
+    height: 85%;
+    justify-content: center;
 }

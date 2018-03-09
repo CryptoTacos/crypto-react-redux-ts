@@ -4,14 +4,34 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import RaisedButton from 'material-ui/RaisedButton';
 
-const MarketCapButtonRow = (): JSX.Element => {
-    return (
-        <div>
-            <MuiThemeProvider muiTheme={getMuiTheme(lightBaseTheme)}>
-                <RaisedButton secondary={true}>Sort By Market Cap</RaisedButton>
-            </MuiThemeProvider>
+export interface Props {
+    onClickSortByPriceChange: () => void;
+    onClickSortByMarketCap: () => void;
+    onClickSortByName: () => void;
+}
 
-        </div>
+const MarketCapButtonRow = ({onClickSortByMarketCap, onClickSortByName, onClickSortByPriceChange}: Props):
+    JSX.Element => {
+    return (
+        <MuiThemeProvider muiTheme={getMuiTheme(lightBaseTheme)}>
+            <div className="market-cap-list-button-row">
+                <RaisedButton
+                    secondary={true}
+                    label={'Sort By MarketCap'}
+                    onClick={onClickSortByMarketCap}
+                />
+                <RaisedButton
+                    secondary={true}
+                    label={'Sort By Name'}
+                    onClick={onClickSortByName}
+                />
+                <RaisedButton
+                    secondary={true}
+                    label={'Sort By %Change'}
+                    onClick={onClickSortByPriceChange}
+                />
+            </div>
+        </MuiThemeProvider>
     );
 };
 
