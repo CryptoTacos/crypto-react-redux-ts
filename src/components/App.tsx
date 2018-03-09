@@ -4,7 +4,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import AppBar from 'material-ui/AppBar';
 import '../scss/App.scss';
-import MarketCapList from '../containers/MarketCapList';
+import MarketCapContainer from '../containers/MarketCapListContainer';
 import MarketCapButtonRow from '../containers/MarketCapButtonRow';
 // const logo = require('../icons/logo.svg');
 const btc = require('../icons/coins/color/btc.svg');
@@ -19,7 +19,7 @@ function App() {
         <img src={btc} />
         <MarketCapButtonRow />
         <h2>Crypto Market Cap List</h2>
-        <MarketCapList />
+        <MarketCapContainer />
       </div>
     </div>
   );
