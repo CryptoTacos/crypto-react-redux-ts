@@ -1,13 +1,21 @@
 .crypto-market-cap-list {
-    .flexrow {
+    .flex-row {
         display: flex;
         flex-direction: row;
         justify-content: space-between;
         flex-grow: 0;
         flex-basis: 250px;
         height: 80px;
+        &-expanded {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            flex-grow: 0;
+            flex-basis: 250px;
+            height: 160px;
+        }
     }
-    .flexcol {
+    .flex-col {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
