@@ -48,6 +48,11 @@ export interface FlattenedCoinData {
     EUR: CoinData; 
 }
 
+export interface CoinRow {
+    coinData: FlattenedCoinData;
+    isRowExpanded: boolean;
+}
+
 export interface CryptoMarketCapListState {
     cryptos: string[];
     title: string;

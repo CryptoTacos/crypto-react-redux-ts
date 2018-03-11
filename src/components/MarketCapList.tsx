@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { FlattenedCoinData } from '../types';
-import { MarketCapListRow } from './MarketCapListRow';
+import { FlattenedCoinData, CoinRow } from '../types';
+import MarketCapListRow from './MarketCapListRow';
 const cryptocurrencies = require('cryptocurrencies');
 
 export interface MarketCapListProps {
@@ -13,38 +13,42 @@ export function MarketCapList({ coinData, handleCoinIconClick, title }: MarketCa
 
   const renderCryptoMarketCapListTableHeader = (): JSX.Element => {
     return (
-      <div className={'flexrow'}>
-        <div className="flexcol-icon">
+      <div className={'flex-row'}>
+        <div className="flex-col-icon">
           <h2 className="item">{''}</h2>
         </div>
-        <div className="flexcol">
+        <div className="flex-col">
           <h2 className="item">{'Ticker'}</h2>
         </div>
-        <div className="flexcol">
+        <div className="flex-col">
           <h2 className="item">{'Full Name'}</h2>
         </div>
-        <div className="flexcol">
+        <div className="flex-col">
           <h2 className="item">{'Total Supply'}</h2>
         </div>
-        <div className="flexcol">
+        <div className="flex-col">
           <h2 className="item">{'Current Price'}</h2>
         </div>
-        <div className="flexcol">
+        <div className="flex-col">
           <h2 className="item">{'Market Cap'}</h2>
         </div>
       </div>
     );
   };
 
+  const mapCoinDataToCoinRow = (coins: FlattenedCoinData[]): CoinRow[] =>
+    coins.map(coin => Object.assign({ coinData: coin, isRowExpanded: false }));
+
   const renderCryptoMarketCapList = (): JSX.Element[] => {
     const cryptoRows = coinData.map((coin, index) => {
+      const coinRow: CoinRow | undefined =
+        mapCoinDataToCoinRow(coinData).find(element => element.coinData.name === coin.name);
       return (
         <MarketCapListRow
-          coinData={coinData}
-          cryptoName={cryptocurrencies[coin.name]}
+          coinRow={coinRow as CoinRow}
+          cryptoName={(cryptocurrencies[coin.name] as string)}
           cryptoSymbol={coin.name}
           key={coin.name}
-          handleCoinIconClick={handleCoinIconClick}
         />
       );
     });

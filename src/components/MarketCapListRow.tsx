@@ -1,89 +1,119 @@
 import * as React from 'react';
-import { FlattenedCoinData } from '../types';
+import { CoinRow } from '../types';
+import MarketCapListRowDetailView from './MarketCapListRowDetailView';
 
 export interface MarketCapListRowProps {
-  coinData: FlattenedCoinData[];
-  handleCoinIconClick?: () => void;
+  coinRow: CoinRow;
   cryptoSymbol: string;
   cryptoName: string;
 }
 
-export function MarketCapListRow(props: MarketCapListRowProps): JSX.Element {
-  const { cryptoSymbol, cryptoName, coinData, handleCoinIconClick } = props;
-  const cryptoIcon = require('../icons/coins/color/' + cryptoSymbol.toLowerCase() + '.svg');
+export interface MarketCapListRowState {
+  isExpanded: boolean;
+  cryptoIcon: string;
+}
 
-  const renderCoinPriceCol = (coinTicker: string): JSX.Element => {
-    const coin: FlattenedCoinData | undefined = coinData.find(element => element.name === coinTicker);
+class MarketCapListRow extends React.Component<MarketCapListRowProps, MarketCapListRowState> {
+
+  constructor(props: MarketCapListRowProps) {
+    super(props);
+    this.state = {
+      isExpanded: false,
+      cryptoIcon: require(`../icons/coins/color/${this.props.cryptoSymbol.toLowerCase()}.svg`)
+    };
+  }
+
+  handleCoinIconClick = (): void => {
+    this.setState(prevState => ({
+      isExpanded: !prevState.isExpanded
+    }));
+  }
+
+  renderCoinPriceCol = (): JSX.Element => {
     return (
-      <span className={coin ? 'item ' + coin.style : 'item'}>
-        {coin ? coin.USD.PRICE : 'Price Not Found'}
+      <span className={this.props.coinRow ? `item ${this.props.coinRow.coinData.style}` : 'item'}>
+        {this.props.coinRow.coinData.USD.PRICE}
       </span>
     );
-  };
+  }
 
-  const renderCryptoMarketCapIcon = (icon: string): JSX.Element => {
+  renderCryptoMarketCapIcon = (): JSX.Element => {
     return (
       <div className="item">
         <img
           className="icon"
-          src={icon}
-          onClick={handleCoinIconClick}
+          src={this.state.cryptoIcon}
+          onClick={this.handleCoinIconClick}
         />
       </div>
     );
-  };
+  }
 
-  const renderCryptoMarketCapSymbol = (value: string) => {
+  renderCryptoMarketCapSymbol = () => {
     return (
-      <span className="item">{value}</span>
+      <span className="item">{this.props.cryptoSymbol}</span>
     );
-  };
+  }
 
-  const renderCryptoName = (value: string): JSX.Element => {
+  renderCryptoName = (): JSX.Element => {
     return (
-      <span className="item">{value}</span>
+      <span className="item">{this.props.cryptoName}</span>
     );
-  };
+  }
 
-  const renderTotalSupply = (coinTicker: string): JSX.Element => {
-    const coin: FlattenedCoinData | undefined = coinData.find(element => element.name === coinTicker);
-    return (
-      <span className="item">
-        {coin ? coin.USD.SUPPLY : 'Supply Not Found'}
-      </span>
-    );
-  };
-
-  const renderCryptoMarketCapChange = (coinTicker: string): JSX.Element => {
-    const coin: FlattenedCoinData | undefined = coinData.find(element => element.name === coinTicker);
+  renderTotalSupply = (): JSX.Element => {
     return (
       <span className="item">
-        {coin ? coin.USD.MKTCAP : 'Market Cap Not Found'}
+        {this.props.coinRow.coinData.USD.SUPPLY}
       </span>
     );
-  };
+  }
 
-  return (
-    <div className={'flexrow'} key={cryptoName}>
-          <div className="flexcol-icon">
-            {renderCryptoMarketCapIcon(cryptoIcon)}
-          </div>
-          <div className="flexcol">
-            {renderCryptoMarketCapSymbol(cryptoSymbol)}
-          </div>
-          <div className="flexcol">
-            {renderCryptoName(cryptoName)}
-          </div>
-          <div className="flexcol">
-            {renderTotalSupply(cryptoSymbol)}
-          </div>
-          <div className="flexcol">
-            {renderCoinPriceCol(cryptoSymbol)}
-          </div>
-          <div className="flexcol">
-            {renderCryptoMarketCapChange(cryptoSymbol)}
-          </div>
+  renderCryptoMarketCapChange = (): JSX.Element => {
+    return (
+      <span className="item">
+        {this.props.coinRow.coinData.USD.MKTCAP}
+      </span>
+    );
+  }
 
+  renderBasicCoinColumns = (): JSX.Element => {
+    return (
+      <div className="flex-row">
+        <div className="flex-col-icon">
+          {this.renderCryptoMarketCapIcon()}
         </div>
-  );
+        <div className="flex-col">
+          {this.renderCryptoMarketCapSymbol()}
+        </div>
+        <div className="flex-col">
+          {this.renderCryptoName()}
+        </div>
+        <div className="flex-col">
+          {this.renderTotalSupply()}
+        </div>
+        <div className="flex-col">
+          {this.renderCoinPriceCol()}
+        </div>
+        <div className="flex-col">
+          {this.renderCryptoMarketCapChange()}
+        </div>
+      </div>
+    );
+  }
+
+  renderDetailedView = (): JSX.Element => {
+    return (
+      <div className="crypto-market-cap-list">
+        {this.renderBasicCoinColumns()}
+        <MarketCapListRowDetailView coinRow={this.props.coinRow} />
+      </div>
+    );
+  }
+
+  render() {
+    return this.state.isExpanded ? this.renderDetailedView() : this.renderBasicCoinColumns();
+  }
 }
+
+export default MarketCapListRow;
