@@ -1,5 +1,5 @@
 import {
-    SELECT_COIN_ICON, SET_COIN_DATA, SET_AVAILABLE_COIN_LIST, SELECT_SORT_BY_MARKET_CAP,
+    SET_COIN_DATA, SET_AVAILABLE_COIN_LIST, SELECT_SORT_BY_MARKET_CAP,
     SELECT_SORT_BY_PRICE, SELECT_SORT_BY_NAME
 } from '../constants';
 import { CryptoMarketCapListAction } from '../actions/cryptoMarketCapListActions';
@@ -16,11 +16,6 @@ const initialState: CryptoMarketCapListState = {
 const cryptoMarketCapList = (state = initialState, action: CryptoMarketCapListAction | MarketCapMenuBarAction):
     CryptoMarketCapListState => {
     switch (action.type) {
-        case SELECT_COIN_ICON:
-            return {
-                ...state,
-                title: 'HI'
-            };
 
         case SET_COIN_DATA:
             return {
