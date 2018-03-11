@@ -3,9 +3,6 @@ import * as constants from '../constants';
 import { CoinDataResponse, FlattenedCoinData, StoreState } from '../types';
 import { Dispatch } from 'redux';
 const cryptoCompare = require('cryptocompare');
-export interface SelectCoinIcon {
-    type: constants.SELECT_COIN_ICON;
-}
 
 export interface FilterListAlphabetically {
     type: constants.FILTER_LIST_ALPHABETICALLY;
@@ -21,11 +18,7 @@ export interface SetAvailableCoinList {
     coinList: string[];
 }
 
-export type CryptoMarketCapListAction = SelectCoinIcon | FilterListAlphabetically | SetCoinData | SetAvailableCoinList;
-
-export const selectCoinIcon = (): SelectCoinIcon => ({
-    type: constants.SELECT_COIN_ICON
-});
+export type CryptoMarketCapListAction = FilterListAlphabetically | SetCoinData | SetAvailableCoinList;
 
 export const filterListAlphabetically = () => ({
     type: constants.FILTER_LIST_ALPHABETICALLY
