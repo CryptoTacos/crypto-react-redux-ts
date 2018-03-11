@@ -1,26 +1,32 @@
 import * as React from 'react';
-import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import AppBar from 'material-ui/AppBar';
-import '../scss/App.scss';
+import { Route } from 'react-router-dom';
 import MarketCapList from '../containers/MarketCapList';
 import MarketCapButtonRow from '../containers/MarketCapButtonRow';
-// const logo = require('../icons/logo.svg');
-const btc = require('../icons/coins/color/btc.svg');
+import NavBar from './NavBar';
+import About from './About';
+import '../scss/App.scss';
 
 function App() {
   return (
+
     <div>
-      <MuiThemeProvider muiTheme={getMuiTheme(lightBaseTheme)}>
-        <AppBar title="Crypto App" />
-      </MuiThemeProvider>
-      <div>
-        <img src={btc} />
-        <MarketCapButtonRow />
-        <h2>Crypto Market Cap List</h2>
-        <MarketCapList />
-      </div>
+      <NavBar />
+      <Route
+        exact={true}
+        path="/"
+        render={() => (
+          <div>
+            <MarketCapButtonRow />
+            <h2>Crypto Market Cap List</h2>
+            <MarketCapList />
+          </div>
+        )}
+      />
+      <Route
+        exact={true}
+        path="/about"
+        render={About}
+      />
     </div>
   );
 }
