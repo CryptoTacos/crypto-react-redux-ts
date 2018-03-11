@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { CoinRow } from '../types';
+import MarketCapListRowDetailView from './MarketCapListRowDetailView';
 
 export interface MarketCapListRowProps {
   coinRow: CoinRow;
@@ -18,89 +19,100 @@ class MarketCapListRow extends React.Component<MarketCapListRowProps, MarketCapL
     super(props);
     this.state = {
       isExpanded: false,
-      cryptoIcon: require('../icons/coins/color/' + this.props.cryptoSymbol.toLowerCase() + '.svg')
+      cryptoIcon: require(`../icons/coins/color/${this.props.cryptoSymbol.toLowerCase()}.svg`)
     };
   }
 
   handleCoinIconClick = (): void => {
-    console.log('smarty');
     this.setState(prevState => ({
       isExpanded: !prevState.isExpanded
     }));
   }
 
-  renderCoinPriceCol(coinTicker: string): JSX.Element {
+  renderCoinPriceCol = (): JSX.Element => {
     return (
-      <span className={this.props.coinRow ? 'item ' + this.props.coinRow.coinData.style : 'item'}>
-        {this.props.coinRow ? this.props.coinRow.coinData.USD.PRICE : 'Price Not Found'}
+      <span className={this.props.coinRow ? `item ${this.props.coinRow.coinData.style}` : 'item'}>
+        {this.props.coinRow.coinData.USD.PRICE}
       </span>
     );
   }
 
-  renderCryptoMarketCapIcon(icon: string): JSX.Element {
+  renderCryptoMarketCapIcon = (): JSX.Element => {
     return (
-      <div className="item">`
+      <div className="item">
         <img
           className="icon"
-          src={icon}
+          src={this.state.cryptoIcon}
           onClick={this.handleCoinIconClick}
         />
       </div>
     );
   }
 
-  renderCryptoMarketCapSymbol(value: string) {
+  renderCryptoMarketCapSymbol = () => {
     return (
-      <span className="item">{value}</span>
+      <span className="item">{this.props.cryptoSymbol}</span>
     );
   }
 
-  renderCryptoName(value: string): JSX.Element {
+  renderCryptoName = (): JSX.Element => {
     return (
-      <span className="item">{value}</span>
+      <span className="item">{this.props.cryptoName}</span>
     );
   }
 
-  renderTotalSupply(coinTicker: string): JSX.Element {
+  renderTotalSupply = (): JSX.Element => {
     return (
       <span className="item">
-        {this.props.coinRow ? this.props.coinRow.coinData.USD.SUPPLY : 'Supply Not Found'}
+        {this.props.coinRow.coinData.USD.SUPPLY}
       </span>
     );
   }
 
-  renderCryptoMarketCapChange(coinTicker: string): JSX.Element {
+  renderCryptoMarketCapChange = (): JSX.Element => {
     return (
       <span className="item">
-        {this.props.coinRow ? this.props.coinRow.coinData.USD.MKTCAP : 'Market Cap Not Found'}
+        {this.props.coinRow.coinData.USD.MKTCAP}
       </span>
+    );
+  }
+
+  renderBasicCoinColumns = (): JSX.Element => {
+    return (
+      <div className="flex-row">
+        <div className="flex-col-icon">
+          {this.renderCryptoMarketCapIcon()}
+        </div>
+        <div className="flex-col">
+          {this.renderCryptoMarketCapSymbol()}
+        </div>
+        <div className="flex-col">
+          {this.renderCryptoName()}
+        </div>
+        <div className="flex-col">
+          {this.renderTotalSupply()}
+        </div>
+        <div className="flex-col">
+          {this.renderCoinPriceCol()}
+        </div>
+        <div className="flex-col">
+          {this.renderCryptoMarketCapChange()}
+        </div>
+      </div>
+    );
+  }
+
+  renderDetailedView = (): JSX.Element => {
+    return (
+      <div className="crypto-market-cap-list">
+        {this.renderBasicCoinColumns()}
+        <MarketCapListRowDetailView coinRow={this.props.coinRow} />
+      </div>
     );
   }
 
   render() {
-    return (
-      <div className={`flex-row${this.state.isExpanded ? '-expanded' : ''}`} key={this.props.cryptoName}>
-        <div className="flex-col-icon">
-          {this.renderCryptoMarketCapIcon(this.state.cryptoIcon)}
-        </div>
-        <div className="flex-col">
-          {this.renderCryptoMarketCapSymbol(this.props.cryptoSymbol)}
-        </div>
-        <div className="flex-col">
-          {this.renderCryptoName(this.props.cryptoName)}
-        </div>
-        <div className="flex-col">
-          {this.renderTotalSupply(this.props.cryptoSymbol)}
-        </div>
-        <div className="flex-col">
-          {this.renderCoinPriceCol(this.props.cryptoSymbol)}
-        </div>
-        <div className="flex-col">
-          {this.renderCryptoMarketCapChange(this.props.cryptoSymbol)}
-        </div>
-
-      </div>
-    );
+    return this.state.isExpanded ? this.renderDetailedView() : this.renderBasicCoinColumns();
   }
 }
 

@@ -1,33 +1,59 @@
+@mixin flex-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-grow: 0;
+    flex-basis: 250px;
+}
+
+@mixin flex-col {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+@mixin top-border {
+    border-top: 1px black solid;
+}
+
+@mixin top-bottom-border{
+    @include top-border;
+    border-bottom: 1px black solid;
+}
+
 .crypto-market-cap-list {
     .flex-row {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        flex-grow: 0;
-        flex-basis: 250px;
+        @include flex-row;
+        @include top-border;
         height: 80px;
+
         &-expanded {
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-            flex-grow: 0;
-            flex-basis: 250px;
-            height: 160px;
+            @include flex-row;
+            @include top-border;
+            height: 400px;
+        }
+
+        &:last-child{
+            @include flex-row;
+            @include top-bottom-border;
+            height: 80px;
         }
     }
     .flex-col {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
+        @include flex-col;
         flex-grow: 0;
         flex-basis: 20%;
         &-icon{
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+            @include flex-col;
             flex-grow: 0;
             flex-basis: 10%;
         }
+    }
+
+    .coin-detail-row{
+        @include flex-row;
+        justify-content: center;
+        margin: auto;
     }
 
     .item {
@@ -72,36 +98,32 @@
     }
 }
 
-.greenticker {
+@mixin ticker-box {
     line-height: 70px;
     text-align: center;
-    color: green;
-    border: 1px solid green;
     width: 70%;
     height: 85%;
     justify-content: center;
+}
+
+.greenticker {
+    @include ticker-box;
+    color: green;
+    border: 1px solid green;
     animation-name: red-to-green;
     animation-duration: 2s;
 }
 
 .redticker {
-    line-height: 70px;
-    text-align: center;
+    @include ticker-box;
     color: red;
     border: 1px solid red;
-    width: 70%;
-    height: 85%;
-    justify-content: center;
     animation-name: green-to-red;
     animation-duration: 2s;
 }
 
 .nochangeticker {
-    line-height: 70px;
-    text-align: center;
+    @include ticker-box;
     color: black;
     border: 1px solid black;
-    width: 70%;
-    height: 85%;
-    justify-content: center;
 }

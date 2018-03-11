@@ -45,7 +45,7 @@ export function MarketCapList({ coinData, handleCoinIconClick, title }: MarketCa
         mapCoinDataToCoinRow(coinData).find(element => element.coinData.name === coin.name);
       return (
         <MarketCapListRow
-          coinRow={coinRow ? coinRow : Object.create({})}
+          coinRow={coinRow as CoinRow}
           cryptoName={(cryptocurrencies[coin.name] as string)}
           cryptoSymbol={coin.name}
           key={coin.name}
