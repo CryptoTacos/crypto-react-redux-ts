@@ -108,7 +108,9 @@ module.exports = {
       // please link the files into your node_modules/ and let module-resolution kick in.
       // Make sure your source files are compiled, as they will not be processed in any way.
       new ModuleScopePlugin(paths.appSrc, [paths.appPackageJson]),
-      new TsconfigPathsPlugin({ configFile: paths.appTsConfig })
+      new TsconfigPathsPlugin({
+        configFile: paths.appTsConfig
+      })
     ],
   },
   module: {
@@ -125,10 +127,12 @@ module.exports = {
         include: paths.appSrc,
       },
       {
-
         test: /\.css$/,
-        loader: "style-loader!css-loader"
-
+        loader: 'style-loader'
+      },
+      {
+        test: /\.(png|jpg|gif)$/,
+        use: ['file-loader']
       },
       {
         test: /\.scss$/,
@@ -159,15 +163,13 @@ module.exports = {
           {
             test: /\.(ts|tsx)$/,
             include: paths.appSrc,
-            use: [
-              {
-                loader: require.resolve('ts-loader'),
-                options: {
-                  // disable type checker - we will use it in fork plugin
-                  transpileOnly: true,
-                },
+            use: [{
+              loader: require.resolve('ts-loader'),
+              options: {
+                // disable type checker - we will use it in fork plugin
+                transpileOnly: true,
               },
-            ],
+            }, ],
           },
           // "postcss" loader applies autoprefixer to our CSS.
           // "css" loader resolves paths in CSS and adds assets as dependencies.
