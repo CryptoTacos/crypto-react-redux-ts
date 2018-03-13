@@ -1,6 +1,6 @@
 import {
     SET_COIN_DATA, SET_AVAILABLE_COIN_LIST, SELECT_SORT_BY_MARKET_CAP,
-    SELECT_SORT_BY_PRICE, SELECT_SORT_BY_NAME
+    SELECT_SORT_BY_PRICE, SELECT_SORT_BY_NAME, CHANGE_MARKET_LIST_CURRENCY
 } from '../constants';
 import { CryptoMarketCapListAction } from '../actions/cryptoMarketCapListActions';
 import { MarketCapMenuBarAction } from '../actions/marketCapButtonRowActions';
@@ -10,6 +10,7 @@ const cryptocurrencies = require('cryptocurrencies');
 const initialState: CryptoMarketCapListState = {
     cryptos: cryptocurrencies.symbols(),
     coinData: [],
+    currencyContext: 'USD',
     title: 'Title',
 };
 
@@ -45,6 +46,12 @@ const cryptoMarketCapList = (state = initialState, action: CryptoMarketCapListAc
             return {
                 ...state,
                 coinData: action.sortedList
+            };
+
+        case CHANGE_MARKET_LIST_CURRENCY:
+            return {
+                ...state,
+                currencyContext: action.currency
             };
 
         default:

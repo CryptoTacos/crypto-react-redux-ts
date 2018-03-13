@@ -11,6 +11,7 @@ interface DispatchFromProps {
     onClickSortByPriceChange: () => void;
     onClickSortByMarketCap: () => void;
     onClickSortByName: () => void;
+    onChangeCurrency: (currency: string) => void;
 }
 
 const mapStateToProps = (state: StoreState): StateFromProps => ({
@@ -21,6 +22,7 @@ const mapDispatchToProps = (dispatch: Dispatch<actions.MarketCapMenuBarAction>):
     onClickSortByPriceChange: () => null,
     onClickSortByMarketCap: () =>  dispatch(actions.selectSortByMarketCap()),
     onClickSortByName: () => dispatch(actions.selectSortByName()),
+    onChangeCurrency: (currency: string) => dispatch(actions.onChangeCurrency(currency))
 });
 
 export default connect<StateFromProps, DispatchFromProps, {}>(
