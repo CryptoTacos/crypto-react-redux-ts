@@ -57,6 +57,7 @@ export interface CryptoMarketCapListState {
     cryptos: string[];
     title: string;
     coinData: FlattenedCoinData[];
+    currencyContext: string;
 }
 
 export interface MenuBarState {
