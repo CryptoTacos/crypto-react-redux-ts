@@ -1,11 +1,12 @@
 import * as React from 'react';
-import { CoinRow } from '../types';
+import { CoinRow, CoinData } from '../types';
 import MarketCapListRowDetailView from './MarketCapListRowDetailView';
 
 export interface MarketCapListRowProps {
   coinRow: CoinRow;
   cryptoSymbol: string;
   cryptoName: string;
+  currencyContext: string;
 }
 
 export interface MarketCapListRowState {
@@ -23,6 +24,39 @@ class MarketCapListRow extends React.Component<MarketCapListRowProps, MarketCapL
     };
   }
 
+  getCurrencyContext = (): CoinData => {
+    switch (this.props.currencyContext) {
+      case 'USD':
+        return this.props.coinRow.coinData.USD;
+      case 'EUR':
+        return this.props.coinRow.coinData.EUR;
+      default:
+        return this.props.coinRow.coinData.USD;
+    }
+  }
+
+  getCurrencyPrefix = (): string => {
+    switch (this.props.currencyContext) {
+      case 'USD':
+        return '$';
+      case 'EUR':
+        return '€';
+      default:
+        return '$';
+    }
+  }
+
+  getMinimzedNumber = (value: number): string => {
+    const billion = 1000000000;
+    const million = 1000000;
+    if (value >= billion) {
+      return `${Number(value / billion).toFixed(3)} billion`;
+    } else if (value >= million) {
+      return `${Number(value / million).toFixed(3)} million`;
+    }
+    return `${value}`;
+  }
+
   handleCoinIconClick = (): void => {
     this.setState(prevState => ({
       isExpanded: !prevState.isExpanded
@@ -32,7 +66,7 @@ class MarketCapListRow extends React.Component<MarketCapListRowProps, MarketCapL
   renderCoinPriceCol = (): JSX.Element => {
     return (
       <span className={this.props.coinRow ? `item ${this.props.coinRow.coinData.style}` : 'item'}>
-        {this.props.coinRow.coinData.USD.PRICE}
+        {`${this.getCurrencyPrefix()}${this.getCurrencyContext().PRICE}`}
       </span>
     );
   }
@@ -64,7 +98,7 @@ class MarketCapListRow extends React.Component<MarketCapListRowProps, MarketCapL
   renderTotalSupply = (): JSX.Element => {
     return (
       <span className="item">
-        {this.props.coinRow.coinData.USD.SUPPLY}
+        {this.getMinimzedNumber(this.getCurrencyContext().SUPPLY)}
       </span>
     );
   }
@@ -72,7 +106,7 @@ class MarketCapListRow extends React.Component<MarketCapListRowProps, MarketCapL
   renderCryptoMarketCapChange = (): JSX.Element => {
     return (
       <span className="item">
-        {this.props.coinRow.coinData.USD.MKTCAP}
+        {`${this.getCurrencyPrefix()}${this.getMinimzedNumber(this.getCurrencyContext().MKTCAP)}`}
       </span>
     );
   }
@@ -106,7 +140,10 @@ class MarketCapListRow extends React.Component<MarketCapListRowProps, MarketCapL
     return (
       <div className="crypto-market-cap-list">
         {this.renderBasicCoinColumns()}
-        <MarketCapListRowDetailView coinRow={this.props.coinRow} />
+        <MarketCapListRowDetailView
+          coinRow={this.props.coinRow}
+          currencyContext={this.props.currencyContext}
+        />
       </div>
     );
   }
