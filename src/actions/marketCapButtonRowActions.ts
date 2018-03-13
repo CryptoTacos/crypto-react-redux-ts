@@ -1,6 +1,5 @@
 import * as constants from '../constants';
-import store from '../store';
-import { StoreState, FlattenedCoinData } from '../types';
+import { FlattenedCoinData } from '../types';
 
 export interface IncludesSortedList {
     sortedList: FlattenedCoinData[];
@@ -32,13 +31,12 @@ export const onChangeCurrency = (currency: string): ChangeCurrency => {
     };
 };
 
-export const selectSortByMarketCap = (): SelectSortByMarketCap => {
+export const selectSortByMarketCap = (coinData: FlattenedCoinData[]): SelectSortByMarketCap => {
     let sortedPriceArray: FlattenedCoinData[] = [];
 
-    sortedPriceArray = (store.getState() as StoreState).cryptoMarketCapListState
-        .coinData.sort((coinA, coinB) => {
-            return coinB.USD.MKTCAP - coinA.USD.MKTCAP;
-        });
+    sortedPriceArray = coinData.sort((coinA, coinB) => {
+        return coinB.USD.MKTCAP - coinA.USD.MKTCAP;
+    });
 
     return {
         type: constants.SELECT_SORT_BY_MARKET_CAP,
@@ -46,15 +44,14 @@ export const selectSortByMarketCap = (): SelectSortByMarketCap => {
     };
 };
 
-export const selectSortByName = (): SelectSortByName => {
+export const selectSortByName = (coinData: FlattenedCoinData[]): SelectSortByName => {
     let sortedPriceArray: FlattenedCoinData[] = [];
 
-    sortedPriceArray = (store.getState() as StoreState).cryptoMarketCapListState
-        .coinData.sort((coinA, coinB) => {
-            if (coinA.name < coinB.name) { return -1; }
-            if (coinA.name > coinB.name) { return 1; }
-            return 0;
-        });
+    sortedPriceArray = coinData.sort((coinA, coinB) => {
+        if (coinA.name < coinB.name) { return -1; }
+        if (coinA.name > coinB.name) { return 1; }
+        return 0;
+    });
 
     return {
         type: constants.SELECT_SORT_BY_NAME,
