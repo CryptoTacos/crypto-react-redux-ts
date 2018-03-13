@@ -7,6 +7,7 @@ import { MarketCapList } from '../components/MarketCapList';
 interface StateFromProps {
     title: string;
     coinData: FlattenedCoinData[];
+    currencyContext: string;
 }
 interface DispatchFromProps {
 
@@ -16,6 +17,7 @@ export interface MarketCapListProps {
     coinData: FlattenedCoinData[];
     onClickCoinIcon?: (tickerSymbol: string) => void;
     title: string;
+    currencyContext: string;
 }
 
 export interface MarketCapListState {
@@ -30,6 +32,7 @@ class MarketCapContainer extends React.Component<MarketCapListProps, MarketCapLi
                 <MarketCapList
                     coinData={this.props.coinData}
                     title={this.props.title}
+                    currencyContext={this.props.currencyContext}
                 />
             </div>
         );
@@ -39,6 +42,7 @@ class MarketCapContainer extends React.Component<MarketCapListProps, MarketCapLi
 const mapStateToProps = (state: StoreState): StateFromProps => ({
     title: state.cryptoMarketCapListState.title,
     coinData: state.cryptoMarketCapListState.coinData,
+    currencyContext: state.cryptoMarketCapListState.currencyContext,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<actions.CryptoMarketCapListAction>): DispatchFromProps => ({
