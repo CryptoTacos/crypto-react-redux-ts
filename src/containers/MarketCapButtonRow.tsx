@@ -6,24 +6,24 @@ import { connect, Dispatch } from 'react-redux';
 
 export interface Props {
     onClickSortByPriceChange: () => void;
-    onClickSortByMarketCap: () => void;
-    onClickSortByName: () => void;
+    onClickSortByMarketCap: (coinData: FlattenedCoinData[]) => void;
+    onClickSortByName: (coinData: FlattenedCoinData[]) => void;
     coinData: FlattenedCoinData[];
 }
 
-const MarketCapButtonRow = ({onClickSortByMarketCap, onClickSortByName, onClickSortByPriceChange}: Props):
+const MarketCapButtonRow = ({onClickSortByMarketCap, onClickSortByName, onClickSortByPriceChange, coinData}: Props):
     JSX.Element => {
     return (
             <div className="market-cap-list-button-row">
                 <RaisedButton
                     secondary={true}
                     label={'Sort By MarketCap'}
-                    onClick={onClickSortByMarketCap}
+                    onClick={() => onClickSortByMarketCap(coinData)}
                 />
                 <RaisedButton
                     secondary={true}
                     label={'Sort By Name'}
-                    onClick={onClickSortByName}
+                    onClick={() => onClickSortByName(coinData)}
                 />
                 <RaisedButton
                     secondary={true}
