@@ -54,11 +54,13 @@
         @include flex-row;
         justify-content: center;
         margin: auto;
+        padding-top: 15px;
     }
 
     .item {
         justify-content: center;
         margin: auto;
+        font-size: 20px;
         .icon {
             display: block;
             margin: auto;
@@ -126,4 +128,9 @@
     @include ticker-box;
     color: black;
     border: 1px solid black;
+}
+
+.coin-detail-header {
+    color: grey;
+    font-size: 20px;
 }
