@@ -28,7 +28,7 @@ class MarketCapContainer extends React.Component<MarketCapListProps, MarketCapLi
 
     render() {
         return (
-            <div>
+            <div className="scrollable-market-cap-list">
                 <MarketCapList
                     coinData={this.props.coinData}
                     title={this.props.title}
