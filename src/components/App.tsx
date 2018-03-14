@@ -15,7 +15,7 @@ function App() {
         exact={true}
         path="/"
         render={() => (
-          <div>
+          <div className="market-list">
             <MarketCapButtonRow />
             <h2>Crypto Market Cap List</h2>
             <MarketCapList />
