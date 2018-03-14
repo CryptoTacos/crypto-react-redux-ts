@@ -17,7 +17,19 @@ export interface SelectSortByMarketCap extends IncludesSortedList {
     type: constants.SELECT_SORT_BY_MARKET_CAP;
 }
 
-export type MarketCapMenuBarAction = SelectSortByName | SelectSortByPrice | SelectSortByMarketCap;
+export interface ChangeCurrency {
+    type: constants.CHANGE_MARKET_LIST_CURRENCY;
+    currency: string;
+}
+
+export type MarketCapMenuBarAction = SelectSortByName | SelectSortByPrice | SelectSortByMarketCap | ChangeCurrency;
+
+export const onChangeCurrency = (currency: string): ChangeCurrency => {
+    return {
+        type: constants.CHANGE_MARKET_LIST_CURRENCY,
+        currency: currency
+    };
+};
 
 export const selectSortByMarketCap = (coinData: FlattenedCoinData[]): SelectSortByMarketCap => {
     let sortedPriceArray: FlattenedCoinData[] = [];

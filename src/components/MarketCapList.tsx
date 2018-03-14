@@ -7,10 +7,11 @@ export interface MarketCapListProps {
   coinData: FlattenedCoinData[];
   handleCoinIconClick?: () => void;
   title: string;
+  currencyContext: string;
 }
 
-export function MarketCapList({ coinData, handleCoinIconClick, title }: MarketCapListProps): JSX.Element {
-
+export function MarketCapList({ coinData, handleCoinIconClick, title, currencyContext }: MarketCapListProps):
+  JSX.Element {
   const renderCryptoMarketCapListTableHeader = (): JSX.Element => {
     return (
       <div className={'flex-row'}>
@@ -49,6 +50,7 @@ export function MarketCapList({ coinData, handleCoinIconClick, title }: MarketCa
           cryptoName={(cryptocurrencies[coin.name] as string)}
           cryptoSymbol={coin.name}
           key={coin.name}
+          currencyContext={currencyContext}
         />
       );
     });
