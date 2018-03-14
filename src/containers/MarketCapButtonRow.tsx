@@ -5,18 +5,12 @@ import { StoreState, FlattenedCoinData } from '../types';
 import { connect, Dispatch } from 'react-redux';
 import { DropDownMenu, MenuItem } from 'material-ui';
 
-export interface Props {
-    onClickSortByPriceChange: () => void;
-    onClickSortByMarketCap: () => void;
-    onClickSortByName: () => void;
-    coinData: FlattenedCoinData[];
-}
-
 export interface MarketCapButtonRowProps {
     onClickSortByPriceChange: () => void;
-    onClickSortByMarketCap: () => void;
-    onClickSortByName: () => void;
+    onClickSortByMarketCap: (coinData: FlattenedCoinData[]) => void;
+    onClickSortByName: (coinData: FlattenedCoinData[]) => void;
     onChangeCurrency: (currency: string) => void;
+    coinData: FlattenedCoinData[];
 }
 
 interface MarketCapButtonRowState {
@@ -51,12 +45,12 @@ class MarketCapButtonRow extends React.Component<MarketCapButtonRowProps, Market
                         <RaisedButton
                             secondary={true}
                             label={'Sort By MarketCap'}
-                            onClick={this.props.onClickSortByMarketCap}
+                            onClick={() => this.props.onClickSortByMarketCap(this.props.coinData)}
                         />
                         <RaisedButton
                             secondary={true}
                             label={'Sort By Name'}
-                            onClick={this.props.onClickSortByName}
+                            onClick={() => this.props.onClickSortByName(this.props.coinData)}
                         />
                         <RaisedButton
                             secondary={true}
