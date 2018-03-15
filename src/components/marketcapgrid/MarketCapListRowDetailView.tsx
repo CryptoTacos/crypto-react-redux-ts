@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { CoinRow, CoinData } from '../types';
+import { CoinRow, CoinData } from '../../types';
 
 export interface MarketCapListRowDetailViewProps {
     coinRow: CoinRow;
