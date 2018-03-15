@@ -1,8 +1,8 @@
 import * as React from 'react';
-import * as actions from '../actions/cryptoMarketCapListActions';
-import { StoreState, FlattenedCoinData } from '../types';
+import * as actions from '../../actions/cryptoMarketCapListActions';
+import { StoreState, FlattenedCoinData } from '../../types';
 import { connect, Dispatch } from 'react-redux';
-import { MarketCapList } from '../components/MarketCapList';
+import { MarketCapList } from '../../components/marketcapgrid/MarketCapList';
 
 interface StateFromProps {
     title: string;

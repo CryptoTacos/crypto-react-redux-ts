@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { FlattenedCoinData, CoinRow } from '../types';
+import { FlattenedCoinData, CoinRow } from '../../types';
 import MarketCapListRow from './MarketCapListRow';
 const cryptocurrencies = require('cryptocurrencies');
 
