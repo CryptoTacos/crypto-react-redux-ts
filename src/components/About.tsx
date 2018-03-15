@@ -1,7 +1,8 @@
 import * as React from 'react';
+import CoinDashboardContainer from '../containers/CoinDashboardContainer';
 
 export default () => (
   <div>
-    <h1>About</h1>
+    <CoinDashboardContainer/>
   </div>
 );
