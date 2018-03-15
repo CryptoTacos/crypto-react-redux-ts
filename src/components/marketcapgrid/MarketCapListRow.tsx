@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { CoinRow, CoinData } from '../types';
+import { CoinRow, CoinData } from '../../types';
 import MarketCapListRowDetailView from './MarketCapListRowDetailView';
 
 export interface MarketCapListRowProps {
@@ -20,7 +20,7 @@ class MarketCapListRow extends React.Component<MarketCapListRowProps, MarketCapL
     super(props);
     this.state = {
       isExpanded: false,
-      cryptoIcon: require(`../icons/coins/color/${this.props.cryptoSymbol.toLowerCase()}.svg`)
+      cryptoIcon: require(`../../icons/coins/color/${this.props.cryptoSymbol.toLowerCase()}.svg`)
     };
   }
 

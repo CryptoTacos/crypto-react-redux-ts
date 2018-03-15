@@ -1,7 +1,7 @@
 import * as React from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
-import * as actions from '../actions/marketCapButtonRowActions';
-import { StoreState, FlattenedCoinData } from '../types';
+import * as actions from '../../actions/marketCapButtonRowActions';
+import { StoreState, FlattenedCoinData } from '../../types';
 import { connect, Dispatch } from 'react-redux';
 import { DropDownMenu, MenuItem } from 'material-ui';
 
