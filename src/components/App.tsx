@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Route } from 'react-router-dom';
-import MarketCapList from '../containers/MarketCapListContainer';
-import MarketCapButtonRow from '../containers/MarketCapButtonRow';
+import MarketCapList from '../containers/marketcapgrid/MarketCapListContainer';
+import MarketCapButtonRow from '../containers/marketcapgrid/MarketCapButtonRow';
 import NavBar from './NavBar';
 import About from './About';
 import '../scss/App.scss';
