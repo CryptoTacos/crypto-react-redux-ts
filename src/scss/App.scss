@@ -3,8 +3,9 @@
 @import "partials/base";
 
 // Partials
-@import './partials/_CryptoMarketCapList.scss';
-@import './partials/_MarketCapButtonRow.scss';
-@import './partials/_CryptoCard.scss';
-@import './partials/_CoinMarketDataRow';
-@import './partials/_CoinDashboard';
+@import './partials/CryptoMarketCapList';
+@import './partials/MarketCapButtonRow';
+@import './partials/CryptoCard';
+@import './partials/CoinMarketDataRow';
+@import './partials/CoinDashboard';
+@import './partials/ExpandableCardSection';

@@ -1,0 +1,25 @@
+.coin-card-expandible-details {
+  transition: all 2s;
+  padding: 20px 10px 0px 10px;
+      .coin-card-expandible-detail-expanded {
+          display: none;
+      }
+      .expandible-info-arrow {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          color: $label-color;
+          p {
+              margin: 0px;
+          }
+          .fa-chevron-down, .fa-chevron-up {
+              animation: BobDown .5s infinite alternate ease-in;
+          }
+      }
+  &.expanded {
+      .coin-card-expandible-detail-expanded {
+          display: block;
+      }
+  }
+}
