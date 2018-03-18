@@ -1,0 +1,14 @@
+.data-label{
+    color: darkgray;
+}
+
+.data-value{
+}
+
+.market-data-row{
+    @include flex-row()
+}
+
+.coin-card{
+    width: 500px;
+}
