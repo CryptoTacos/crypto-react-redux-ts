@@ -1,22 +1,22 @@
 import * as React from 'react';
 
-interface ExpandibleCardSectionProps {
+interface ExpandableCardSectionProps {
 
 }
 
-interface ExpandibleCardSectionState {
+interface ExpandableCardSectionState {
   expanded: boolean;
 }
 
-class ExpandibleCardSection extends React.Component<ExpandibleCardSectionProps, ExpandibleCardSectionState> {
-  constructor(props: ExpandibleCardSectionProps) {
+class ExpandableCardSection extends React.Component<ExpandableCardSectionProps, ExpandableCardSectionState> {
+  constructor(props: ExpandableCardSectionProps) {
     super(props);
     this.state = {
       expanded: false,
     };
   }
 
-  getExpandibleSectionClassName = (): string => {
+  getExpandableSectionClassName = (): string => {
     const { expanded } = this.state;
     const expandedClassParam = expanded ? 'expanded' : 'collapsed';
     return `coin-card-expandible-details ${expandedClassParam}`;
@@ -27,7 +27,7 @@ class ExpandibleCardSection extends React.Component<ExpandibleCardSectionProps, 
     e.preventDefault();
   }
 
-  renderExpandibleInfoArrow = (): JSX.Element => {
+  renderExpandableInfoArrow = (): JSX.Element => {
     return this.state.expanded ? (
       <div className="expandible-info-arrow" onClick={this.toggleExpansion}>
         <p>Collapse</p>
@@ -43,8 +43,8 @@ class ExpandibleCardSection extends React.Component<ExpandibleCardSectionProps, 
 
   render(): JSX.Element {
     return (
-      <div className={this.getExpandibleSectionClassName()}>
-        {this.renderExpandibleInfoArrow()}
+      <div className={this.getExpandableSectionClassName()}>
+        {this.renderExpandableInfoArrow()}
         <div className="coin-card-expandible-detail-expanded">
           {this.props.children}
         </div>
@@ -53,4 +53,4 @@ class ExpandibleCardSection extends React.Component<ExpandibleCardSectionProps, 
   }
 }
 
-export default ExpandibleCardSection;
+export default ExpandableCardSection;
