@@ -1,0 +1,9 @@
+@mixin flex-box(){
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+}
+
+@mixin flex-item(){
+    padding: 8px;
+}
