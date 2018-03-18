@@ -3,7 +3,6 @@ import * as ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import registerServiceWorker from './registerServiceWorker';
 import 'font-awesome/css/font-awesome.min.css';
-import './scss/index.scss';
 import './scss/App.scss';
 import App from './components/App';
 import { getCoinData, setAvailableCoinData } from './actions/cryptoMarketCapListActions';
