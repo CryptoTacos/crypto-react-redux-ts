@@ -1,9 +1,9 @@
-.coin-card-dashboard{
+.coin-card-dashboard {
     width: 100%;
     height: 100%;
     @include flex-box();
 }
 
-.coin-card-flex-item{
+.coin-card-flex-item {
     @include flex-item();
 }
