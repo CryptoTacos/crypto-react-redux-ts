@@ -2,6 +2,7 @@ import * as React from 'react';
 import { CoinData, FlattenedCoinData } from '../types';
 import CoinMarketDataRow from './CoinMarketDataRow';
 import { getMinimzedNumber, getCurrencyPrefix } from '../util/utils';
+import ExpandibleCardSection from './ExpandibleCardSection';
 
 interface CoinCardDetailProps {
     ticker: string;
@@ -34,6 +35,15 @@ class CoinCardDetail extends React.Component<CoinCardDetailProps, CoinCardDetail
                     volume24h={getMinimzedNumber(this.getCurrencyContext().VOLUME24HOUR)}
                     change24h={getMinimzedNumber(this.getCurrencyContext().CHANGE24HOUR)}
                 />
+
+                <ExpandibleCardSection>
+                    <p>Here we can have a twitter feed of the latest coin relevant tweets,
+                        or any feed about the coin for that matter</p>
+
+                    <p>Potentially whitepaper here</p>
+
+                    <p>Maybe a chart here</p>
+                </ExpandibleCardSection>
             </div>
         );
     }
