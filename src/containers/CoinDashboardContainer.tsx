@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { connect, Dispatch } from 'react-redux';
-import * as actions from '../actions/coinDashboardActions';
 import { StoreState, FlattenedCoinData } from '../types';
+import * as actions from '../actions/coinDashboardActions';
 import CoinCardDetail from '../components/CoinCardDetail';
 import CryptoCard from '../components/CryptoCard';
 import { Tabs, Tab } from 'material-ui/Tabs';
