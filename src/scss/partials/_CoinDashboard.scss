@@ -1,0 +1,8 @@
+.coin-card-dashboard{
+    @include flex-box();
+    width: 1600px;
+}
+
+.coin-card-flex-item{
+    @include flex-item();
+}

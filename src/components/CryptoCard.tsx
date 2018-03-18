@@ -1,9 +1,11 @@
 import * as React from 'react';
 import { Card, CardHeader } from 'material-ui/Card';
+import { CardText } from 'material-ui';
 
-interface CryptoCardProps { 
+interface CryptoCardProps {
     avatarPath: string;
     title: string;
+    className?: string;
     subtitle?: string;
 }
 
@@ -17,14 +19,19 @@ class CryptoCard extends React.Component<CryptoCardProps, CryptoCardState> {
 
     render(): JSX.Element {
         return (
-            <Card>
-                <CardHeader
-                    title={this.props.title}
-                    subtitle={this.props.subtitle}
-                    avatar={this.props.avatarPath}
-                />
-                {this.props.children}
-            </Card>
+            <div className="coin-card">
+                <Card>
+                    <CardHeader
+                        className={this.props.className}
+                        title={this.props.title}
+                        subtitle={this.props.subtitle}
+                        avatar={this.props.avatarPath}
+                    />
+                    <CardText>
+                        {this.props.children}
+                    </CardText>
+                </Card>
+            </div>
         );
     }
 }

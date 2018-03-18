@@ -1,5 +1,7 @@
 import * as React from 'react';
 import { CoinData, FlattenedCoinData } from '../types';
+import CoinMarketDataRow from './CoinMarketDataRow';
+import { getMinimzedNumber, getCurrencyPrefix } from '../util/utils';
 
 interface CoinCardDetailProps {
     ticker: string;
@@ -20,16 +22,18 @@ class CoinCardDetail extends React.Component<CoinCardDetailProps, CoinCardDetail
     renderIcon = (): JSX.Element =>
         <img src={require(`../icons/coins/color/${this.props.ticker.toLowerCase()}.svg`)} />
 
-    renderTickerBox = (): JSX.Element => (
-        <span className={`item ${this.props.coinData.style}`}>
-            {`${this.getCurrencyPrefix()}${this.getCurrencyContext().PRICE}`}
-        </span>
-    )
-
     render(): JSX.Element {
         return (
             <div>
-                {this.renderTickerBox()}
+                <CoinMarketDataRow
+                    name={this.props.ticker}
+                    marketCap={
+                        // tslint:disable-next-line:max-line-length
+                        `${getCurrencyPrefix(this.props.currencyContext)}${getMinimzedNumber(this.getCurrencyContext().MKTCAP)}`}
+                    price={`${getCurrencyPrefix(this.props.currencyContext)}${this.getCurrencyContext().PRICE}`}
+                    volume24h={getMinimzedNumber(this.getCurrencyContext().VOLUME24HOUR)}
+                    change24h={getMinimzedNumber(this.getCurrencyContext().CHANGE24HOUR)}
+                />
             </div>
         );
     }
@@ -42,17 +46,6 @@ class CoinCardDetail extends React.Component<CoinCardDetailProps, CoinCardDetail
                 return this.props.coinData.EUR;
             default:
                 return this.props.coinData.USD;
-        }
-    }
-
-    private getCurrencyPrefix = (): string => {
-        switch (this.props.currencyContext) {
-            case 'USD':
-                return '$';
-            case 'EUR':
-                return '€';
-            default:
-                return '$';
         }
     }
 }

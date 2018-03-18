@@ -1,0 +1,14 @@
+@mixin flex-col($height, $width) {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: $height;
+    width: $width;
+}
+
+
+@mixin flex-col {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
