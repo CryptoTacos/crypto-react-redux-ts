@@ -3,6 +3,7 @@ import { CoinData, FlattenedCoinData } from '../types';
 import CoinMarketDataRow from './CoinMarketDataRow';
 import { getMinimzedNumber, getCurrencyPrefix } from '../util/utils';
 import ExpandableCardSection from './ExpandableCardSection';
+import CandleStickChartForDiscontinuousIntraDay from './charts/CandleStickChartForDiscontinuousIntraDay';
 
 interface CoinCardDetailProps {
     ticker: string;
@@ -36,6 +37,26 @@ class CoinCardDetail extends React.Component<CoinCardDetailProps, CoinCardDetail
                     change24h={getMinimzedNumber(this.getCurrencyContext().CHANGE24HOUR)}
                 />
 
+                <CandleStickChartForDiscontinuousIntraDay
+                    data={[
+                        {
+                            close: 373.3, date: new Date('2016-02-29T07:00:00.000Z'),
+                            high: 373.3, low: 373.3, open: 373.3, volume: 0.43
+                        },
+                        {
+                            close: 373.3, date: new Date('2016-03-29T07:00:00.000Z'),
+                            high: 373.3, low: 373.3, open: 373.3, volume: 0.43
+                        },
+                        {
+                            close: 373.3, date: new Date('2016-04-29T07:00:00.000Z'),
+                            high: 373.3, low: 373.3, open: 373.3, volume: 0.43
+                        },
+                    ]}
+                    width={400}
+                    ratio={1}
+                    type={'svg'}
+                />
+
                 <ExpandableCardSection>
                     <p>Here we can have a twitter feed of the latest coin relevant tweets,
                         or any feed about the coin for that matter</p>
@@ -44,6 +65,7 @@ class CoinCardDetail extends React.Component<CoinCardDetailProps, CoinCardDetail
 
                     <p>Maybe a chart here</p>
                 </ExpandableCardSection>
+
             </div>
         );
     }
