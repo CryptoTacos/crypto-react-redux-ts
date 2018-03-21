@@ -28,7 +28,7 @@ class CoinCardDetail extends React.Component<CoinCardDetailProps, CoinCardDetail
     renderCandlestickChart = (): JSX.Element => (
         <CandleStickChartForContinuousIntraDay
             data={this.props.historicalCoinData}
-            width={400}
+            width={450}
             ratio={1}
             type={'svg'}
         />
