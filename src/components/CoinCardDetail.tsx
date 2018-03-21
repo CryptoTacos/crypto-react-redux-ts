@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { CoinData, FlattenedCoinData } from '../types';
+import { CoinData, FlattenedCoinData, HistoricalCoinDataForContinuousCandlestickChart } from '../types';
 import CoinMarketDataRow from './CoinMarketDataRow';
 import { getMinimzedNumber, getCurrencyPrefix } from '../util/utils';
 import ExpandableCardSection from './ExpandableCardSection';
@@ -9,6 +9,7 @@ interface CoinCardDetailProps {
     ticker: string;
     currencyContext: string;
     coinData: FlattenedCoinData;
+    historicalCoinData: HistoricalCoinDataForContinuousCandlestickChart[];
 }
 
 interface CoinCardDetailState {
@@ -24,6 +25,15 @@ class CoinCardDetail extends React.Component<CoinCardDetailProps, CoinCardDetail
     renderIcon = (): JSX.Element =>
         <img src={require(`../icons/coins/color/${this.props.ticker.toLowerCase()}.svg`)} />
 
+    renderCandlestickChart = (): JSX.Element => (
+        <CandleStickChartForDiscontinuousIntraDay
+            data={this.props.historicalCoinData}
+            width={400}
+            ratio={1}
+            type={'svg'}
+        />
+    )
+
     render(): JSX.Element {
         return (
             <div>
@@ -37,25 +47,7 @@ class CoinCardDetail extends React.Component<CoinCardDetailProps, CoinCardDetail
                     change24h={getMinimzedNumber(this.getCurrencyContext().CHANGE24HOUR)}
                 />
 
-                <CandleStickChartForDiscontinuousIntraDay
-                    data={[
-                        {
-                            close: 373.3, date: new Date('2016-02-29T07:00:00.000Z'),
-                            high: 373.3, low: 373.3, open: 373.3, volume: 0.43
-                        },
-                        {
-                            close: 373.3, date: new Date('2016-03-29T07:00:00.000Z'),
-                            high: 373.3, low: 373.3, open: 373.3, volume: 0.43
-                        },
-                        {
-                            close: 373.3, date: new Date('2016-04-29T07:00:00.000Z'),
-                            high: 373.3, low: 373.3, open: 373.3, volume: 0.43
-                        },
-                    ]}
-                    width={400}
-                    ratio={1}
-                    type={'svg'}
-                />
+                {this.props.historicalCoinData.length > 0 ? this.renderCandlestickChart() : null}
 
                 <ExpandableCardSection>
                     <p>Here we can have a twitter feed of the latest coin relevant tweets,
