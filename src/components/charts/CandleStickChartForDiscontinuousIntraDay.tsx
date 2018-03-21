@@ -22,10 +22,11 @@ import { discontinuousTimeScaleProvider } from 'react-stockcharts/lib/scale';
 import { OHLCTooltip } from 'react-stockcharts/lib/tooltip';
 import { fitWidth } from "react-stockcharts/lib/helper";
 import { last } from 'react-stockcharts/lib/utils';
+import { HistoricalCoinDataForCandlestickChart } from '../../types';
 
 
 interface CandleStickChartForDiscontinuousIntraDayProps {
-    data: any;
+    data: HistoricalCoinDataForCandlestickChart[];
     width: number;
     ratio: number;
     type: string;

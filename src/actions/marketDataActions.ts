@@ -1,5 +1,5 @@
 import {
-    HistoricalCoinData, HistoricalCoinDataForContinuousCandlestickChart,
+    HistoricalCoinData, HistoricalCoinDataForCandlestickChart,
     CryptoCompareHistoricalCoinData
 } from '../types';
 import { SET_HISTORICAL_MARKET_DATA } from '../constants/';
@@ -20,9 +20,9 @@ export const setHistoricalMarketData = (historicalMarketData: HistoricalCoinData
 
 function parseHistoricalData(historicalCoinData: CryptoCompareHistoricalCoinData[], coinName: string):
     HistoricalCoinData {
-    const historicalDataList: HistoricalCoinDataForContinuousCandlestickChart[] = [];
+    const historicalDataList: HistoricalCoinDataForCandlestickChart[] = [];
     for (const data of historicalCoinData) {
-        const objectForContinuseCandleStickChart: HistoricalCoinDataForContinuousCandlestickChart = {
+        const objectForContinuseCandleStickChart: HistoricalCoinDataForCandlestickChart = {
             date: new Date(data.time),
             open: data.open,
             high: data.high,
