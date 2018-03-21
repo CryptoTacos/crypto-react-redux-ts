@@ -4,6 +4,25 @@ export interface StoreState {
     menuBarState: MenuBarState;
 }
 
+export interface HistoricalCoinDataForContinuousCandlestickChart {
+    date: Date;
+    open: number;
+    high: number;
+    low: number;
+    close: number;
+    volume: number;
+}
+
+export interface HistoricalCoinData {
+    close: number;
+    high: number;
+    low: number;
+    open: number;
+    time: number;
+    volumefrom: number;
+    volumeto: number;
+}
+
 export interface CoinData {
     CHANGE24HOUR: number;
     CHANGEDAY: number;
@@ -45,7 +64,7 @@ export interface FlattenedCoinData {
     name: string;
     style: string;
     USD: CoinData;
-    EUR: CoinData; 
+    EUR: CoinData;
 }
 
 export interface CoinRow {

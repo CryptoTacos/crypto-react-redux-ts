@@ -12,12 +12,15 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import configureStore from './store';
+import { getHistoricalMarketData } from './actions/marketDataActions';
 
 const store = configureStore();
 store.dispatch(setAvailableCoinData());
 const fetchLatestMarketData = () => {
   store.dispatch(getCoinData((store.getState() as StoreState).cryptoMarketCapListState.cryptos));
 };
+
+getHistoricalMarketData();
 
 setInterval(fetchLatestMarketData, 10000);
 
