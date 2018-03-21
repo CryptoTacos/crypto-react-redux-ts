@@ -1,11 +1,26 @@
-import { HistoricalCoinData, HistoricalCoinDataForContinuousCandlestickChart } from '../types';
-
+import {
+    HistoricalCoinData, HistoricalCoinDataForContinuousCandlestickChart,
+    CryptoCompareHistoricalCoinData
+} from '../types';
+import { SET_HISTORICAL_MARKET_DATA } from '../constants/';
 const cryptoCompare = require('cryptocompare');
 
-function parseHistoricalData(historicalCoinData: HistoricalCoinData[]):
-    HistoricalCoinDataForContinuousCandlestickChart[] {
-    const dataList: HistoricalCoinDataForContinuousCandlestickChart[] = [];
+interface SetHistoricalMarketData {
+    type: SET_HISTORICAL_MARKET_DATA;
+    historicalMarketData: HistoricalCoinData[];
+}
 
+export type MarketDataActions = SetHistoricalMarketData;
+
+export const setHistoricalMarketData = (historicalMarketData: HistoricalCoinData[]):
+    SetHistoricalMarketData => ({
+        type: SET_HISTORICAL_MARKET_DATA,
+        historicalMarketData: historicalMarketData
+    });
+
+function parseHistoricalData(historicalCoinData: CryptoCompareHistoricalCoinData[], coinName: string):
+    HistoricalCoinData {
+    const historicalDataList: HistoricalCoinDataForContinuousCandlestickChart[] = [];
     for (const data of historicalCoinData) {
         const objectForContinuseCandleStickChart: HistoricalCoinDataForContinuousCandlestickChart = {
             date: new Date(data.time),
@@ -15,11 +30,16 @@ function parseHistoricalData(historicalCoinData: HistoricalCoinData[]):
             close: data.close,
             volume: data.volumeto,
         };
-        dataList.push(objectForContinuseCandleStickChart);
+
+        historicalDataList.push(objectForContinuseCandleStickChart);
     }
-    return dataList;
+    return {
+        coinName: coinName,
+        historicalCoinData: historicalDataList,
+    };
 }
 
-export async function getHistoricalMarketData(): Promise<HistoricalCoinDataForContinuousCandlestickChart[]> {
-    return await parseHistoricalData(cryptoCompare.histoMinute('BTC', 'USD'));
+export async function getHistoricalMarketData(coin: string, context: string):
+    Promise<HistoricalCoinData> {
+    return parseHistoricalData(await cryptoCompare.histoMinute(coin.toUpperCase(), context.toUpperCase()), coin);
 }

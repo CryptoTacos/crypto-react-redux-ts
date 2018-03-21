@@ -2,6 +2,7 @@
 export interface StoreState {
     cryptoMarketCapListState: CryptoMarketCapListState;
     menuBarState: MenuBarState;
+    marketDataReducer: MarketDataState;
 }
 
 export interface HistoricalCoinDataForContinuousCandlestickChart {
@@ -13,7 +14,7 @@ export interface HistoricalCoinDataForContinuousCandlestickChart {
     volume: number;
 }
 
-export interface HistoricalCoinData {
+export interface CryptoCompareHistoricalCoinData {
     close: number;
     high: number;
     low: number;
@@ -81,4 +82,14 @@ export interface CryptoMarketCapListState {
 
 export interface MenuBarState {
     title: string;
+}
+
+export interface HistoricalCoinData {
+    coinName: string;
+    historicalCoinData: HistoricalCoinDataForContinuousCandlestickChart[];
+}
+
+export interface MarketDataState {
+    historicalMarketData: HistoricalCoinData[];
+    coinData: FlattenedCoinData[];
 }

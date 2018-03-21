@@ -6,13 +6,13 @@ import 'font-awesome/css/font-awesome.min.css';
 import './scss/App.scss';
 import App from './components/App';
 import { getCoinData, setAvailableCoinData } from './actions/cryptoMarketCapListActions';
-import { StoreState } from './types';
+import { StoreState, HistoricalCoinData } from './types';
 import { BrowserRouter as Router, } from 'react-router-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import configureStore from './store';
-import { getHistoricalMarketData } from './actions/marketDataActions';
+import { getHistoricalMarketData, setHistoricalMarketData } from './actions/marketDataActions';
 
 const store = configureStore();
 store.dispatch(setAvailableCoinData());
@@ -20,7 +20,21 @@ const fetchLatestMarketData = () => {
   store.dispatch(getCoinData((store.getState() as StoreState).cryptoMarketCapListState.cryptos));
 };
 
-getHistoricalMarketData();
+const fetchLatestHistoricalMarketData = async () => {
+  const dataList: HistoricalCoinData[] = [];
+  for (const coin of store.getState().cryptoMarketCapListState.cryptos) {
+    try {
+      dataList.push(await getHistoricalMarketData(coin, 'USD'));
+    } catch (error) {
+      console.error(error);
+      continue;
+    }
+  }
+
+  store.dispatch(setHistoricalMarketData(dataList));
+};
+
+fetchLatestHistoricalMarketData();
 
 setInterval(fetchLatestMarketData, 10000);
 
