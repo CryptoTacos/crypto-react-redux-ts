@@ -25,13 +25,12 @@ const fetchLatestHistoricalMarketData = async () => {
   for (const coin of store.getState().cryptoMarketCapListState.cryptos) {
     try {
       dataList.push(await getHistoricalMarketData(coin, 'USD'));
+      store.dispatch(setHistoricalMarketData(dataList));
     } catch (error) {
       console.error(error);
       continue;
     }
   }
-
-  store.dispatch(setHistoricalMarketData(dataList));
 };
 
 fetchLatestHistoricalMarketData();
