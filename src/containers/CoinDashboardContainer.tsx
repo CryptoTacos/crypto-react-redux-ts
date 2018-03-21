@@ -2,7 +2,7 @@ import * as React from 'react';
 import { connect, Dispatch } from 'react-redux';
 import {
     StoreState, FlattenedCoinData, HistoricalCoinData,
-    HistoricalCoinDataForContinuousCandlestickChart
+    HistoricalCoinDataForCandlestickChart
 } from '../types';
 import * as actions from '../actions/coinDashboardActions';
 import CoinCardDetail from '../components/CoinCardDetail';
@@ -24,7 +24,7 @@ class CoinDashboardContainer extends React.Component<CoinDashboardProps, CoinDas
         this.state = {};
     }
 
-    getHistorialData = (coinName: string): HistoricalCoinDataForContinuousCandlestickChart[] => {
+    getHistorialData = (coinName: string): HistoricalCoinDataForCandlestickChart[] => {
         const historicalData: HistoricalCoinData | undefined =
             this.props.historicalData.find(element => element.coinName.toLowerCase() === coinName.toLowerCase());
 

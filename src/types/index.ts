@@ -5,7 +5,7 @@ export interface StoreState {
     marketDataReducer: MarketDataState;
 }
 
-export interface HistoricalCoinDataForContinuousCandlestickChart {
+export interface HistoricalCoinDataForCandlestickChart {
     date: Date;
     open: number;
     high: number;
@@ -86,7 +86,7 @@ export interface MenuBarState {
 
 export interface HistoricalCoinData {
     coinName: string;
-    historicalCoinData: HistoricalCoinDataForContinuousCandlestickChart[];
+    historicalCoinData: HistoricalCoinDataForCandlestickChart[];
 }
 
 export interface MarketDataState {

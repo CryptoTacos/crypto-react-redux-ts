@@ -1,15 +1,15 @@
 import * as React from 'react';
-import { CoinData, FlattenedCoinData, HistoricalCoinDataForContinuousCandlestickChart } from '../types';
+import { CoinData, FlattenedCoinData, HistoricalCoinDataForCandlestickChart } from '../types';
 import CoinMarketDataRow from './CoinMarketDataRow';
 import { getMinimzedNumber, getCurrencyPrefix } from '../util/utils';
 import ExpandableCardSection from './ExpandableCardSection';
-import CandleStickChartForDiscontinuousIntraDay from './charts/CandleStickChartForDiscontinuousIntraDay';
+import CandleStickChartForContinuousIntraDay from './charts/CandleStickChartForContinuousIntraDay';
 
 interface CoinCardDetailProps {
     ticker: string;
     currencyContext: string;
     coinData: FlattenedCoinData;
-    historicalCoinData: HistoricalCoinDataForContinuousCandlestickChart[];
+    historicalCoinData: HistoricalCoinDataForCandlestickChart[];
 }
 
 interface CoinCardDetailState {
@@ -26,7 +26,7 @@ class CoinCardDetail extends React.Component<CoinCardDetailProps, CoinCardDetail
         <img src={require(`../icons/coins/color/${this.props.ticker.toLowerCase()}.svg`)} />
 
     renderCandlestickChart = (): JSX.Element => (
-        <CandleStickChartForDiscontinuousIntraDay
+        <CandleStickChartForContinuousIntraDay
             data={this.props.historicalCoinData}
             width={400}
             ratio={1}
