@@ -23,7 +23,7 @@ function parseHistoricalData(historicalCoinData: CryptoCompareHistoricalCoinData
     const historicalDataList: HistoricalCoinDataForCandlestickChart[] = [];
     for (const data of historicalCoinData) {
         const objectForContinuseCandleStickChart: HistoricalCoinDataForCandlestickChart = {
-            date: new Date(data.time),
+            date: new Date(data.time * 1000),
             open: data.open,
             high: data.high,
             low: data.low,
