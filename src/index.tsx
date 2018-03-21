@@ -12,7 +12,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import configureStore from './store';
-import { getHistoricalMarketData, setHistoricalMarketData } from './actions/marketDataActions';
+import { getHistoricalMarketDataByDay, setHistoricalMarketData } from './actions/marketDataActions';
 
 const store = configureStore();
 store.dispatch(setAvailableCoinData());
@@ -24,7 +24,7 @@ const fetchLatestHistoricalMarketData = async () => {
   const dataList: HistoricalCoinData[] = [];
   for (const coin of store.getState().cryptoMarketCapListState.cryptos) {
     try {
-      dataList.push(await getHistoricalMarketData(coin, 'USD'));
+      dataList.push(await getHistoricalMarketDataByDay(coin, 'USD'));
       store.dispatch(setHistoricalMarketData(dataList));
     } catch (error) {
       console.error(error);
@@ -34,7 +34,6 @@ const fetchLatestHistoricalMarketData = async () => {
 };
 
 fetchLatestHistoricalMarketData();
-
 setInterval(fetchLatestMarketData, 10000);
 
 fetchLatestMarketData();

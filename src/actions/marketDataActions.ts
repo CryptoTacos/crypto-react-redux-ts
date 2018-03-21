@@ -39,7 +39,17 @@ function parseHistoricalData(historicalCoinData: CryptoCompareHistoricalCoinData
     };
 }
 
-export async function getHistoricalMarketData(coin: string, context: string):
+export async function getHistoricalMarketDataByDay(coin: string, context: string):
+    Promise<HistoricalCoinData> {
+    return parseHistoricalData(await cryptoCompare.histoDay(coin.toUpperCase(), context.toUpperCase()), coin);
+}
+
+export async function getHistoricalMarketDataByHour(coin: string, context: string):
+    Promise<HistoricalCoinData> {
+    return parseHistoricalData(await cryptoCompare.histoHour(coin.toUpperCase(), context.toUpperCase()), coin);
+}
+
+export async function getHistoricalMarketDataByMinute(coin: string, context: string):
     Promise<HistoricalCoinData> {
     return parseHistoricalData(await cryptoCompare.histoMinute(coin.toUpperCase(), context.toUpperCase()), coin);
 }
