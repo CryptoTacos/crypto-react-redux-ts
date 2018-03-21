@@ -1,5 +1,5 @@
 import * as React from 'react';
-
+import * as CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 interface ExpandableCardSectionProps {
 
 }
@@ -14,12 +14,6 @@ class ExpandableCardSection extends React.Component<ExpandableCardSectionProps, 
     this.state = {
       expanded: false,
     };
-  }
-
-  getExpandableSectionClassName = (): string => {
-    const { expanded } = this.state;
-    const expandedClassParam = expanded ? 'expanded' : 'collapsed';
-    return `coin-card-expandible-details ${expandedClassParam}`;
   }
 
   toggleExpansion = (e: React.MouseEvent<HTMLElement>) => {
@@ -41,14 +35,26 @@ class ExpandableCardSection extends React.Component<ExpandableCardSectionProps, 
       );
   }
 
+  renderExpandableContent = () => {
+    return this.state.expanded ? <div>{this.props.children}</div> : null;
+  }
+
   render(): JSX.Element {
     return (
-      <div className={this.getExpandableSectionClassName()}>
+
+      <div className="coin-card-expandible-details">
         {this.renderExpandableInfoArrow()}
         <div className="coin-card-expandible-detail-expanded">
-          {this.props.children}
+          <CSSTransitionGroup
+            transitionName="expand-height"
+            transitionEnterTimeout={600}
+            transitionLeaveTimeout={200}
+          >
+            {this.renderExpandableContent()}
+          </CSSTransitionGroup>
         </div>
-      </div>
+      </div >
+
     );
   }
 }
