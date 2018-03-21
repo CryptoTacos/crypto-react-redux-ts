@@ -6,3 +6,25 @@
     transform: translateY(2px);
   }
 }
+
+.expand-height-enter {
+  max-height: 0px;
+  opacity: 0;
+}
+
+.expand-height-enter.expand-height-enter-active {
+  max-height: 1000px;
+  opacity: 1;
+  transition: max-height 0.4s, opacity 0.15s 0.1s;
+}
+
+.expand-height-leave {
+  max-height: 1000px;
+  opacity: 1;
+}
+
+.expand-height-leave.expand-height-leave-active {
+  max-height: 0px;
+  opacity: 0;
+  transition: max-height 0.1s 0.1s, opacity 0.2s 0s;
+}
