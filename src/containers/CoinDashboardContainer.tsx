@@ -71,7 +71,7 @@ interface DispatchFromProps {
 }
 
 const mapStateToProps = (state: StoreState): StateFromProps => ({
-    coinData: state.cryptoMarketCapListState.coinData,
+    coinData: state.marketDataReducer.currentMarketData,
     historicalData: state.marketDataReducer.historicalMarketData,
 });
 
