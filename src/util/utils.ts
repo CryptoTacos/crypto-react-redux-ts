@@ -19,3 +19,20 @@ export const getCurrencyPrefix = (currency: string): string => {
           return '$';
       }
 };
+
+// This is a temporary check to see if we have an icon for the coin... if not we will not
+// consider the data for the coin
+export const getAvailableCoins = (): string[] => {
+    console.log('get available coins');
+    const cryptoCurrencies: string[] = require('cryptocurrencies').symbols();
+    const appCoins: string[] = [];
+    for (const coin of cryptoCurrencies) {
+        try {
+            require('../icons/coins/color/' + coin.toLowerCase() + '.svg');
+            appCoins.push(coin);
+        } catch (error) {
+            continue;
+        }
+    }
+    return appCoins;
+};

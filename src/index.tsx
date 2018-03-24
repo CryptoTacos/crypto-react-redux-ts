@@ -10,9 +10,10 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import configureStore from './store';
-import { HistoricalCoinData } from './types';
-import { getHistoricalMarketDataByDay, setHistoricalMarketData } from './actions/historicalMarketDataActions';
-import { updateCurrentMarketData } from './actions/currentMarketDataActions';
+import { getCurrentMarketData } from './actions/currentMarketDataActions';
+import { HistoricalDataType, getHistoricalMarketData } from './actions/historicalMarketDataActions';
+// import { HistoricalCoinData } from './types';
+// import { getHistoricalMarketDataByDay, setHistoricalMarketData } from './actions/historicalMarketDataActions';
 
 const store = configureStore();
 
@@ -29,26 +30,13 @@ for (const coin of cryptoCurrencies) {
   }
 }
 
-const getLatestMarketData = (coins: string[]) => {
-  store.dispatch(updateCurrentMarketData(coins, ['USD']));
+const getLatestMarketData = () => {
+  store.dispatch(getCurrentMarketData());
 };
 
-const fetchLatestHistoricalMarketData = async () => {
-  const dataList: HistoricalCoinData[] = [];
-  for (const coin of appCoins) {
-    try {
-      dataList.push(await getHistoricalMarketDataByDay(coin, 'USD'));
-      store.dispatch(setHistoricalMarketData(dataList));
-    } catch (error) {
-      console.error(error);
-      continue;
-    }
-  }
-};
+store.dispatch(getHistoricalMarketData(HistoricalDataType.HOURLY));
 
-fetchLatestHistoricalMarketData();
-
-setInterval(getLatestMarketData(appCoins), 10000);
+setInterval(getLatestMarketData(), 10000);
 
 ReactDOM.render(
   <Provider store={store}>

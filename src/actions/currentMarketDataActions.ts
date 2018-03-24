@@ -1,26 +1,32 @@
 import { FlattenedCoinData, CoinDataResponse } from '../types';
-import { SET_CURRENT_MARKET_DATA } from '../constants';
-import { Dispatch } from 'redux';
+import { SET_CURRENT_MARKET_DATA, GET_CURRENT_MARKET_DATA } from '../constants';
+import { getAvailableCoins } from '../util/utils';
 const cryptoCompare = require('cryptocompare');
 
-interface SetCurrentMarketData {
+export interface GetCurrentMarketData {
+    type: GET_CURRENT_MARKET_DATA;
+}
+
+export interface SetCurrentMarketData {
     type: SET_CURRENT_MARKET_DATA;
     currentMarketData: FlattenedCoinData[];
 }
 
-export type CurrentMarketDataAction = SetCurrentMarketData;
+export type CurrentMarketDataAction = SetCurrentMarketData | GetCurrentMarketData;
 
-const getCurrentMarketData = (currentMarketData: FlattenedCoinData[]) => ({
-    type: SET_CURRENT_MARKET_DATA, currentMarketData
+export const getCurrentMarketData = () => ({
+    type: GET_CURRENT_MARKET_DATA
 });
 
-export const updateCurrentMarketData = (coins: string[], context: string[]) =>
-    async (dispatch: Dispatch<CurrentMarketDataAction>): Promise<void> => {
-        dispatch(getCurrentMarketData(await fetchCurrentMarketData(coins, context)));
-    };
+export const setCurrentMarketData = (currentMarketData: FlattenedCoinData[]) => ({
+    type: SET_CURRENT_MARKET_DATA,
+    currentMarketData
+});
 
-export async function fetchCurrentMarketData(coins: string[], context: string[]): Promise<FlattenedCoinData[]> {
+export async function fetchCurrentMarketData(coins?: string[], context?: string[]): Promise<FlattenedCoinData[]> {
     let sortedPriceArray: FlattenedCoinData[] = [];
+    coins = coins ? coins : getAvailableCoins();
+    context = context ? context : ['USD'];
 
     // Here we have to split up the api call because they throttle us
     let prices: CoinDataResponse[] = await cryptoCompare.priceFull(coins.slice(0, 59), context);
@@ -61,21 +67,5 @@ const compareCurrentPricesToPrevious = (oldData: FlattenedCoinData[], newData: F
         }
     }
     return tickerizedNewData;
-};
-*/
-
-/*
-const getAvailableCoinList = (): string[] => {
-    let availableCoins: string[] = [];
-    const cryptocurrencies = require('cryptocurrencies');
-    for (const coin of cryptocurrencies.symbols()) {
-        try {
-            require('../icons/coins/color/' + coin.toLowerCase() + '.svg');
-            availableCoins.push(coin);
-        } catch (error) {
-            continue;
-        }
-    }
-    return availableCoins;
 };
 */
