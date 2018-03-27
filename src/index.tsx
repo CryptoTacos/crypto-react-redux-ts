@@ -5,23 +5,50 @@ import registerServiceWorker from './registerServiceWorker';
 import 'font-awesome/css/font-awesome.min.css';
 import './scss/App.scss';
 import App from './components/App';
-import { getCoinData, setAvailableCoinData } from './actions/cryptoMarketCapListActions';
-import { StoreState } from './types';
 import { BrowserRouter as Router, } from 'react-router-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import configureStore from './store';
+import { HistoricalCoinData } from './types';
+import { getHistoricalMarketDataByDay, setHistoricalMarketData } from './actions/historicalMarketDataActions';
+import { updateCurrentMarketData } from './actions/currentMarketDataActions';
 
 const store = configureStore();
-store.dispatch(setAvailableCoinData());
-const fetchLatestMarketData = () => {
-  store.dispatch(getCoinData((store.getState() as StoreState).cryptoMarketCapListState.cryptos));
+
+// This is a temporary check to see if we have an icon for the coin... if not we will not
+// consider the data for the coin
+const cryptoCurrencies: string[] = require('cryptocurrencies').symbols();
+const appCoins: string[] = [];
+for (const coin of cryptoCurrencies) {
+  try {
+    require('./icons/coins/color/' + coin.toLowerCase() + '.svg');
+    appCoins.push(coin);
+  } catch (error) {
+    continue;
+  }
+}
+
+const getLatestMarketData = (coins: string[]) => {
+  store.dispatch(updateCurrentMarketData(coins, ['USD']));
 };
 
-setInterval(fetchLatestMarketData, 10000);
+const fetchLatestHistoricalMarketData = async () => {
+  const dataList: HistoricalCoinData[] = [];
+  for (const coin of appCoins) {
+    try {
+      dataList.push(await getHistoricalMarketDataByDay(coin, 'USD'));
+      store.dispatch(setHistoricalMarketData(dataList));
+    } catch (error) {
+      console.error(error);
+      continue;
+    }
+  }
+};
 
-fetchLatestMarketData();
+fetchLatestHistoricalMarketData();
+
+setInterval(getLatestMarketData(appCoins), 10000);
 
 ReactDOM.render(
   <Provider store={store}>
