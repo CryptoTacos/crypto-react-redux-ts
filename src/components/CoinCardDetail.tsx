@@ -1,13 +1,15 @@
 import * as React from 'react';
-import { CoinData, FlattenedCoinData } from '../types';
+import { CoinData, FlattenedCoinData, HistoricalCoinDataForCandlestickChart } from '../types';
 import CoinMarketDataRow from './CoinMarketDataRow';
 import { getMinimzedNumber, getCurrencyPrefix } from '../util/utils';
 import ExpandableCardSection from './ExpandableCardSection';
+import CandleStickChartForContinuousIntraDay from './charts/CandleStickChartForContinuousIntraDay';
 
 interface CoinCardDetailProps {
     ticker: string;
     currencyContext: string;
     coinData: FlattenedCoinData;
+    historicalCoinData: HistoricalCoinDataForCandlestickChart[];
 }
 
 interface CoinCardDetailState {
@@ -23,6 +25,15 @@ class CoinCardDetail extends React.Component<CoinCardDetailProps, CoinCardDetail
     renderIcon = (): JSX.Element =>
         <img src={require(`../icons/coins/color/${this.props.ticker.toLowerCase()}.svg`)} />
 
+    renderCandlestickChart = (): JSX.Element => (
+        <CandleStickChartForContinuousIntraDay
+            data={this.props.historicalCoinData}
+            width={400}
+            ratio={1}
+            type={'svg'}
+        />
+    )
+
     render(): JSX.Element {
         return (
             <div>
@@ -36,6 +47,8 @@ class CoinCardDetail extends React.Component<CoinCardDetailProps, CoinCardDetail
                     change24h={getMinimzedNumber(this.getCurrencyContext().CHANGE24HOUR)}
                 />
 
+                {this.props.historicalCoinData.length > 0 ? this.renderCandlestickChart() : null}
+
                 <ExpandableCardSection>
                     <p>Here we can have a twitter feed of the latest coin relevant tweets,
                         or any feed about the coin for that matter</p>
@@ -44,6 +57,7 @@ class CoinCardDetail extends React.Component<CoinCardDetailProps, CoinCardDetail
 
                     <p>Maybe a chart here</p>
                 </ExpandableCardSection>
+
             </div>
         );
     }
