@@ -1,4 +1,3 @@
-
 import { MarketDataState } from '../types/index';
 import { HistoricalMarketDataActions } from '../actions/historicalMarketDataActions';
 import { CurrentMarketDataAction } from '../actions/currentMarketDataActions';
