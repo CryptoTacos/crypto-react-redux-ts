@@ -1,7 +1,5 @@
 
 export interface StoreState {
-    cryptoMarketCapListState: CryptoMarketCapListState;
-    menuBarState: MenuBarState;
     marketDataReducer: MarketDataState;
 }
 
@@ -91,5 +89,5 @@ export interface HistoricalCoinData {
 
 export interface MarketDataState {
     historicalMarketData: HistoricalCoinData[];
-    coinData: FlattenedCoinData[];
+    currentMarketData: FlattenedCoinData[];
 }
