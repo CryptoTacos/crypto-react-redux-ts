@@ -10,18 +10,31 @@ import {
     GetHistoricalMarketData, fetchHistoricalData, setHistoricalMarketData
 } from '../actions/historicalMarketDataActions';
 
+/**
+ * Fetch the latest market data
+ * @param action$ 
+ * @param state$
+ */
 const fetchLatestMarketDataEpic: Epic<CurrentMarketDataAction, StoreState> =
-    (action$): Observable<SetCurrentMarketData> =>
-        action$
+    (action$, state$): Observable<SetCurrentMarketData> => {
+        return action$
             .ofType<GetCurrentMarketData>(GET_CURRENT_MARKET_DATA)
             .mergeMap(() =>
-                Observable.from(fetchCurrentMarketData())
-                    // tslint:disable-next-line:no-any
-                    .map<any, any>(setCurrentMarketData)
+                Observable.interval(6000)
+                    .mergeMap(() =>
+                        Observable.from(fetchCurrentMarketData(state$.getState().coinDashboard.pinnedCoins))
+                            // tslint:disable-next-line:no-any
+                            .map<any, any>(setCurrentMarketData)
+                    )
             );
+    };
 
+/**
+ * Fetch historical market data
+ * @param action$ 
+ */
 const fetchHistoricalMarketDataEpic: Epic<HistoricalMarketDataActions, StoreState> =
-    (action$): Observable<SetHistoricalMarketData> =>
+    (action$, state$): Observable<SetHistoricalMarketData> =>
         action$
             .ofType<GetHistoricalMarketData>(GET_HISTORICAL_MARKET_DATA)
             .mergeMap((action: GetHistoricalMarketData) =>
