@@ -71,11 +71,11 @@ interface DispatchFromProps {
 }
 
 const mapStateToProps = (state: StoreState): StateFromProps => ({
-    coinData: state.marketDataReducer.currentMarketData,
-    historicalData: state.marketDataReducer.historicalMarketData,
+    coinData: state.marketData.currentMarketData,
+    historicalData: state.marketData.historicalMarketData,
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<actions.CoinCardAction>): DispatchFromProps => ({
+const mapDispatchToProps = (dispatch: Dispatch<actions.CoinDashboardActions>): DispatchFromProps => ({
 
 });
 

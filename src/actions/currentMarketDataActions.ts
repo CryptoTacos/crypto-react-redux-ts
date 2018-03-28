@@ -28,11 +28,16 @@ export async function fetchCurrentMarketData(coins?: string[], context?: string[
     coins = coins ? coins : getAvailableCoins();
     context = context ? context : ['USD'];
 
-    // Here we have to split up the api call because they throttle us
-    let prices: CoinDataResponse[] = await cryptoCompare.priceFull(coins.slice(0, 59), context);
-    prices = Object.assign(prices, await cryptoCompare.priceFull(coins.slice(60, 100), context));
-    prices = Object.assign(prices, await cryptoCompare.priceFull(coins.slice(101, 151), context));
-    prices = Object.assign(prices, await cryptoCompare.priceFull(coins.slice(152, 202), context));
+    let prices: CoinDataResponse[];
+    if (coins.length > 60) {
+        // Here we have to split up the api call because they throttle us
+        prices = await cryptoCompare.priceFull(coins.slice(0, 59), context);
+        prices = Object.assign(prices, await cryptoCompare.priceFull(coins.slice(60, 100), context));
+        prices = Object.assign(prices, await cryptoCompare.priceFull(coins.slice(101, 151), context));
+        prices = Object.assign(prices, await cryptoCompare.priceFull(coins.slice(152, 202), context));
+    } else {
+        prices = await cryptoCompare.priceFull(coins, context);
+    }
     // prices = Object.assign(prices, await cryptoCompare.priceFull(coins.slice(203, coins.length), context));
 
     const keys = Object.keys(prices);
