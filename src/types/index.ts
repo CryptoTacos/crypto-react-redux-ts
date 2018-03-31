@@ -1,6 +1,7 @@
 
 export interface StoreState {
-    marketDataReducer: MarketDataState;
+    marketData: MarketDataState;
+    coinDashboard: CoinDashboardState;
 }
 
 export interface HistoricalCoinDataForCandlestickChart {
@@ -90,4 +91,8 @@ export interface HistoricalCoinData {
 export interface MarketDataState {
     historicalMarketData: HistoricalCoinData[];
     currentMarketData: FlattenedCoinData[];
+}
+
+export interface CoinDashboardState {
+    pinnedCoins: string[];
 }
