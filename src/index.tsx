@@ -11,7 +11,8 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import configureStore from './store';
 import { getCurrentMarketData } from './actions/currentMarketDataActions';
-import { HistoricalDataType, getHistoricalMarketData } from './actions/historicalMarketDataActions';
+// import { HistoricalDataType, getHistoricalMarketData } from './actions/historicalMarketDataActions';
+import { getUserPinnedCoins } from './actions/coinDashboardActions';
 // import { HistoricalCoinData } from './types';
 // import { getHistoricalMarketDataByDay, setHistoricalMarketData } from './actions/historicalMarketDataActions';
 
@@ -30,13 +31,9 @@ for (const coin of cryptoCurrencies) {
   }
 }
 
-const getLatestMarketData = () => {
-  store.dispatch(getCurrentMarketData());
-};
-
-store.dispatch(getHistoricalMarketData(HistoricalDataType.HOURLY));
-
-setInterval(getLatestMarketData(), 10000);
+store.dispatch(getUserPinnedCoins('testhash'));
+store.dispatch(getCurrentMarketData());
+// store.dispatch(getHistoricalMarketData(HistoricalDataType.HOURLY));
 
 ReactDOM.render(
   <Provider store={store}>
