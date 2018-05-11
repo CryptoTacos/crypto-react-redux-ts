@@ -1,12 +1,11 @@
 import * as React from 'react';
-import { ChatBotActions } from '../actions/chatBotActions';
 import { Dispatch } from 'redux';
-import { StoreState, IMessage } from '../types';
-import Message from '../components/chat/Message';
+import { StoreState, IMessage, ChatBotAction } from '../types';
 import { connect } from 'react-redux';
+import Message from '../components/chat/Message';
 
 interface ChatContainerProps {
-    messages: IMessage[];
+  messages: IMessage[];
 }
 
 interface ChatContainerState {
@@ -14,53 +13,50 @@ interface ChatContainerState {
 }
 
 class ChatContainer extends React.Component<ChatContainerProps, ChatContainerState> {
-    constructor(props: ChatContainerProps) {
-        super(props);
-        this.state = {};
-    }
+  constructor(props: ChatContainerProps) {
+    super(props);
+    this.state = {};
+  }
 
-    renderMessages = (): JSX.Element[] => {
-        const messageList: JSX.Element[] = [];
-        for (const message of this.props.messages) {
-            messageList.push(
-                <div>
-                    <Message 
-                        messageId={message.messageId}
-                        sentOrReceived={message.sentOrReceived}
-                        children={message.children}
-                        avatar={message.avatar}
-                    />
-                </div>
-            );
-        }
-        return messageList;
-    }
+  renderMessages = (): JSX.Element[] => {
+    return this.props.messages.map((message: IMessage) => {
+      return (
+        <Message
+          key={message.messageId}
+          messageId={message.messageId}
+          sentOrReceived={message.sentOrReceived}
+          messageText={message.messageText}
+          avatar={message.avatar}
+        />
+      );
+    });
+  }
 
-    render() {
-        return (
-            <div>
-                {this.renderMessages()}
-            </div>
-        );
-    }
+  render() {
+    return (
+      <div>
+        {this.renderMessages()}
+      </div>
+    );
+  }
 }
 
 interface StateFromProps {
-
+  messages: IMessage[];
 }
 
 interface DispatchFromProps {
 
 }
 
-const mapStateToProps = (state: StoreState): StateFromProps => ({
-
+const mapStateToProps = (state: StoreState): ChatContainerProps => ({
+  messages: state.chatState.messagesInChat,
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<ChatBotActions>): DispatchFromProps => ({
+const mapDispatchToProps = (dispatch: Dispatch<ChatBotAction>): DispatchFromProps => ({
 
 });
 
 export default connect<StateFromProps, DispatchFromProps, {}>(
-    mapStateToProps, mapDispatchToProps
+  mapStateToProps, mapDispatchToProps
 )(ChatContainer);
