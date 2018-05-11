@@ -17,7 +17,10 @@ class Message extends React.Component<MessageProps, MessageState> {
 
     render() {
         return (
-            <div />
+            <div className="message">
+                {this.props.messageText}
+                {this.props.children}
+            </div>
         );
     }
 }

@@ -1,12 +1,11 @@
 export * from './store';
 export * from './chat';
 export * from './marketData';
-import { IChatState } from '.';
-export * from './chatTypes';
+import { ChatState } from '.';
 export interface StoreState {
     marketData: MarketDataState;
     coinDashboard: CoinDashboardState;
-    chatState: IChatState;
+    chatState: ChatState;
 }
 
 export interface HistoricalCoinDataForCandlestickChart {
