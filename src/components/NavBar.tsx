@@ -60,6 +60,7 @@ export default class NavBar extends React.Component<NavBarProps, NavBarState> {
         >
           <MenuLinkItem exact={true} linkTo="/">Home</MenuLinkItem>
           <MenuLinkItem exact={true} linkTo="/about">About</MenuLinkItem>
+          <MenuLinkItem exact={true} linkTo="/welcome">Welcome</MenuLinkItem>
         </div>
       </Drawer>
     ) : null;
