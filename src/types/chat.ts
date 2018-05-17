@@ -4,18 +4,21 @@ import { ADD_MESSAGES_TO_CURRENT_CHAT, SET_CURRENT_CHAT } from '../constants';
 
 export interface ChatState {
     currentChat: ChatName;
-    welcome: Welcome;
     messagesInChat: IMessage[];
+    chats: Chats;
 }
 
-export interface Welcome {
+export type Chats = {
+    [C in ChatName]: Chat;
+};
+
+export interface Chat {
     messages: IMessage[];
 }
 
-export enum ChatName {
-    WELCOME = 'WELCOME',
-    HOME_LOGGED_IN = 'HOME_LOGGED_IN',
-}
+export type ChatName =
+    'welcome'
+    | 'homeLoggedIn';
 
 export interface IMessage {
     messageId: string;
