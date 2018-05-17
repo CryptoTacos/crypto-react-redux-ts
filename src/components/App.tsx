@@ -13,7 +13,7 @@ function App() {
       <Route
         exact={true}
         path="/"
-        render={() => CoinDashboardContainer}
+        render={() => <CoinDashboardContainer />}
       />
       <Route
         exact={true}
