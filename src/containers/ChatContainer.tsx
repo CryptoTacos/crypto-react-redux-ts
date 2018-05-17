@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { Dispatch } from 'redux';
-import { StoreState, IMessage, ChatBotAction } from '../types';
+import { StoreState, IMessage, ChatBotAction, ChatState } from '../types';
 import { connect } from 'react-redux';
 import Message from '../components/chat/Message';
 
 interface ChatContainerProps {
-  messages: IMessage[];
+  chatState: ChatState;
 }
 
 interface ChatContainerState {
@@ -19,7 +19,8 @@ class ChatContainer extends React.Component<ChatContainerProps, ChatContainerSta
   }
 
   renderMessages = (): JSX.Element[] => {
-    return this.props.messages.map((message: IMessage) => {
+    const messages = this.props.chatState.chats[this.props.chatState.currentChat].messages;
+    return messages.map((message: IMessage) => {
       return (
         <Message
           key={message.messageId}
@@ -42,7 +43,7 @@ class ChatContainer extends React.Component<ChatContainerProps, ChatContainerSta
 }
 
 interface StateFromProps {
-  messages: IMessage[];
+  chatState: ChatState;
 }
 
 interface DispatchFromProps {
@@ -50,7 +51,7 @@ interface DispatchFromProps {
 }
 
 const mapStateToProps = (state: StoreState): ChatContainerProps => ({
-  messages: state.chatState.messagesInChat,
+  chatState: state.chatState,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<ChatBotAction>): DispatchFromProps => ({
