@@ -17,8 +17,7 @@ export enum ChatName {
     HOME_LOGGED_IN = 'HOME_LOGGED_IN',
 }
 
-export interface IMessage {
-    messageId: string;
+export interface IMessage extends IBaseMessage {
     sentOrReceived: 'sent' | 'received';
     avatar?: Avatar;
     messageText?: string;
@@ -36,4 +35,12 @@ export interface AddMessagesToCurrentChat {
 export interface SetCurrentChat {
     type: SET_CURRENT_CHAT;
     chatName: ChatName;
+}
+
+export interface IBaseMessage {
+    key?: number;
+}
+
+export interface IBaseMessageMap<T extends IBaseMessage> {
+    [key: number]: T;
 }
