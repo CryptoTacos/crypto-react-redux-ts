@@ -1,11 +1,14 @@
 import * as React from 'react';
 import { Dispatch } from 'redux';
-import { StoreState, IMessage, ChatBotAction } from '../types';
+import { StoreState, IMessage, ChatBotAction, IBaseMessage, IBaseMessageMap } from '../types';
 import { connect } from 'react-redux';
 import Message from '../components/chat/Message';
+import BaseChat from '../chat/BaseChat';
+import WelcomeChat from '../chat/WelcomeChat';
+import DefaultChat from '../chat/DefaultChat';
 
 interface ChatContainerProps {
-  messages: IMessage[];
+  chatDriver: WelcomeChat | DefaultChat;
 }
 
 interface ChatContainerState {
@@ -19,11 +22,11 @@ class ChatContainer extends React.Component<ChatContainerProps, ChatContainerSta
   }
 
   renderMessages = (): JSX.Element[] => {
-    return this.props.messages.map((message: IMessage) => {
+    return this.props.chatDriver.getMessagesAsList().map((message: IMessage) => {
       return (
         <Message
-          key={message.messageId}
-          messageId={message.messageId}
+          key={message.key}
+          messageId={message.key}
           sentOrReceived={message.sentOrReceived}
           messageText={message.messageText}
           avatar={message.avatar}
@@ -42,7 +45,7 @@ class ChatContainer extends React.Component<ChatContainerProps, ChatContainerSta
 }
 
 interface StateFromProps {
-  messages: IMessage[];
+  chatDriver: WelcomeChat | DefaultChat;
 }
 
 interface DispatchFromProps {
@@ -50,7 +53,7 @@ interface DispatchFromProps {
 }
 
 const mapStateToProps = (state: StoreState): ChatContainerProps => ({
-  messages: state.chatState.messagesInChat,
+  chatDriver: state.chatState.chatDriver,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<ChatBotAction>): DispatchFromProps => ({

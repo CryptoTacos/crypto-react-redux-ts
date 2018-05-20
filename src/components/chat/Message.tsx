@@ -3,6 +3,7 @@ import * as React from 'react';
 import { IMessage } from '../../types';
 
 interface MessageProps extends IMessage {
+    messageId: number;
 }
 
 interface MessageState {

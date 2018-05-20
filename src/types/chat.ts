@@ -1,11 +1,17 @@
 import { IMessage } from '.';
 import Avatar from '../components/chat/Avatar';
 import { ADD_MESSAGES_TO_CURRENT_CHAT, SET_CURRENT_CHAT } from '../constants';
+import BaseChat from '../chat/BaseChat';
+import WelcomeChat from '../chat/WelcomeChat';
+import DefaultChat from '../chat/DefaultChat';
+
+export interface WelcomeChatState extends ChatState {
+
+}
 
 export interface ChatState {
     currentChat: ChatName;
-    welcome: Welcome;
-    messagesInChat: IMessage[];
+    chatDriver: WelcomeChat | DefaultChat;
 }
 
 export interface Welcome {
@@ -15,12 +21,6 @@ export interface Welcome {
 export enum ChatName {
     WELCOME = 'WELCOME',
     HOME_LOGGED_IN = 'HOME_LOGGED_IN',
-}
-
-export interface IMessage extends IBaseMessage {
-    sentOrReceived: 'sent' | 'received';
-    avatar?: Avatar;
-    messageText?: string;
 }
 
 export type ChatBotAction =
@@ -37,8 +37,18 @@ export interface SetCurrentChat {
     chatName: ChatName;
 }
 
+export interface IMessageMap extends IBaseMessageMap<IMessage> {
+
+}
+
+export interface IMessage extends IBaseMessage {
+    sentOrReceived: 'sent' | 'received';
+    avatar?: Avatar;
+    messageText?: string;
+}
+
 export interface IBaseMessage {
-    key?: number;
+    key: number;
 }
 
 export interface IBaseMessageMap<T extends IBaseMessage> {

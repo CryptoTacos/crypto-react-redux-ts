@@ -1,5 +1,5 @@
 import BaseChat from './BaseChat';
-import { IBaseMessageMap, IMessage } from '../types';
+import { IBaseMessageMap, IMessage, IMessageMap } from '../types';
 
 /**
  * Welcome Chat
@@ -12,7 +12,7 @@ import { IBaseMessageMap, IMessage } from '../types';
  * welcomeChat.sendProvideUsernameMessage();
  * welcomeChat.clearMessage();
  */
-class WelcomeChat extends BaseChat<IMessage, IBaseMessageMap<IMessage>> {
+class WelcomeChat extends BaseChat<IMessage, IMessageMap> {
     constructor() {
         super();
         this.sendWelcomeMessage();
