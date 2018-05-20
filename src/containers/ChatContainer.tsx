@@ -1,9 +1,8 @@
 import * as React from 'react';
 import { Dispatch } from 'redux';
-import { StoreState, IMessage, ChatBotAction, IBaseMessage, IBaseMessageMap } from '../types';
+import { StoreState, IMessage, ChatBotAction, } from '../types';
 import { connect } from 'react-redux';
 import Message from '../components/chat/Message';
-import BaseChat from '../chat/BaseChat';
 import WelcomeChat from '../chat/WelcomeChat';
 import DefaultChat from '../chat/DefaultChat';
 

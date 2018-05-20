@@ -1,5 +1,5 @@
 import BaseChat from './BaseChat';
-import { IBaseMessageMap, IMessage, IMessageMap } from '../types';
+import { IMessage, IMessageMap } from '../types';
 
 /**
  * Welcome Chat

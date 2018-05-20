@@ -1,4 +1,4 @@
-import { IBaseMessage, IBaseMessageMap, IMessage, IMessageMap } from '../types';
+import { IBaseMessage, IMessageMap } from '../types';
 import BaseChat from './BaseChat';
 
 /**
