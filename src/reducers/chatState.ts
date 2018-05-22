@@ -1,15 +1,13 @@
-import { ChatState, ChatName, ChatBotAction, WelcomeChatState, } from '../types';
-import { SET_CURRENT_CHAT } from '../constants';
-import WelcomeChat from '../chat/WelcomeChat';
-import DefaultChat from '../chat/DefaultChat';
+import { ChatName, ChatBotAction, IWelcomeChatState, IMessage, } from '../types';
+import { SET_CURRENT_CHAT, ADD_MESSAGE_TO_CHAT } from '../constants';
 
-const initialState: WelcomeChatState = {
+const initialState: IWelcomeChatState = {
     currentChat: ChatName.WELCOME,
-    chatDriver: new WelcomeChat()
+    messages: [],
 
 };
 
-const chatStateReducer = (state = initialState, action: ChatBotAction): ChatState => {
+const chatStateReducer = (state = initialState, action: ChatBotAction<IMessage>): IWelcomeChatState => {
 
     switch (action.type) {
 
@@ -21,34 +19,24 @@ const chatStateReducer = (state = initialState, action: ChatBotAction): ChatStat
             };
         }
         */
+
+        case ADD_MESSAGE_TO_CHAT:
+            return {
+                ...state,
+                messages: [
+                    ...state.messages,
+                    action.message,
+                ],
+            };
+
         case SET_CURRENT_CHAT: {
             return {
                 ...state,
-                currentChat: action.chatName,
-                chatDriver: getChatInstance(action.chatName)
             };
         }
         default:
             return state;
     }
 };
-
-/**
- * This method returns a new instance of a chat object based upon the chat name
- * @param chat
- * @todo revist implementing dynamic return
- * <T extends BaseChat<M, C>, M extends IBaseMessage, C extends IBaseMessageMap<M>>
- */
-function getChatInstance(chat: ChatName): WelcomeChat | DefaultChat {
-    switch (chat) {
-        case ChatName.HOME_LOGGED_IN:
-            break;
-        case ChatName.WELCOME:
-            return new WelcomeChat();
-        default:
-            throw new Error(`No chat type implemented for ${chat}`);
-    }
-    return new DefaultChat();
-}
 
 export default chatStateReducer;

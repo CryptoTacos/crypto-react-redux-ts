@@ -1,12 +1,13 @@
 import { combineReducers } from 'redux';
 import marketDataReducer from './marketDataReducer';
 import coinDashboardReducer from './coinDashboardReducer';
-import { StoreState } from '../types';
+import { IStoreState } from '../types';
 import chatStateReducer from './chatState';
 
 // tslint:disable-next-line:no-any
-export default combineReducers<StoreState>({
+export default combineReducers<IStoreState>({
     marketData: marketDataReducer,
     coinDashboard: coinDashboardReducer,
     chatState: chatStateReducer,
+    welcomeChatState: chatStateReducer,
 });

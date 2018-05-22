@@ -1,13 +1,14 @@
 import * as React from 'react';
 import { Dispatch } from 'redux';
-import { StoreState, IMessage, ChatBotAction, } from '../types';
+import { IStoreState, IMessage, ChatBotAction, } from '../types';
 import { connect } from 'react-redux';
 import Message from '../components/chat/Message';
-import WelcomeChat from '../chat/WelcomeChat';
-import DefaultChat from '../chat/DefaultChat';
+import UserInput from '../components/chat/UserInput';
+import { createNewMessage } from '../actions/chatBotActions';
 
 interface ChatContainerProps {
-  chatDriver: WelcomeChat | DefaultChat;
+  messages: IMessage[];
+  onEnterMessage: (message: string) => void;
 }
 
 interface ChatContainerState {
@@ -21,7 +22,7 @@ class ChatContainer extends React.Component<ChatContainerProps, ChatContainerSta
   }
 
   renderMessages = (): JSX.Element[] => {
-    return this.props.chatDriver.getMessagesAsList().map((message: IMessage) => {
+    return this.props.messages.map((message: IMessage) => {
       return (
         <Message
           key={message.key}
@@ -38,26 +39,32 @@ class ChatContainer extends React.Component<ChatContainerProps, ChatContainerSta
     return (
       <div>
         {this.renderMessages()}
+        <UserInput
+          onEnterMessage={this.props.onEnterMessage}
+        />
       </div>
     );
   }
 }
 
 interface StateFromProps {
-  chatDriver: WelcomeChat | DefaultChat;
+  messages: IMessage[];
 }
 
 interface DispatchFromProps {
-
+  onEnterMessage: (message: string) => void;
 }
 
-const mapStateToProps = (state: StoreState): ChatContainerProps => ({
-  chatDriver: state.chatState.chatDriver,
+const mapStateToProps = (state: IStoreState): StateFromProps => ({
+  messages: state.welcomeChatState.messages,
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<ChatBotAction>): DispatchFromProps => ({
-
-});
+const mapDispatchToProps = (dispatch: Dispatch<ChatBotAction<IMessage>>):
+  DispatchFromProps => ({
+    onEnterMessage: (message: string) => {
+      dispatch(createNewMessage(message));
+    }
+  });
 
 export default connect<StateFromProps, DispatchFromProps, {}>(
   mapStateToProps, mapDispatchToProps

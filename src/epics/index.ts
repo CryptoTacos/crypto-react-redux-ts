@@ -1,5 +1,6 @@
 import { combineEpics } from 'redux-observable';
 import { fetchLatestMarketDataEpic, fetchHistoricalMarketDataEpic } from './marketDataEpics';
+import { createNewMessageEpic } from './chatBotEpics';
 
 /*
 type rootEpicTypes = typeof fetchLatestMarketDataEpic
@@ -14,6 +15,7 @@ type rootEpicTypes = typeof fetchLatestMarketDataEpic
 const rootEpic = combineEpics<any>(
     fetchLatestMarketDataEpic,
     fetchHistoricalMarketDataEpic,
+    createNewMessageEpic,
 
 );
 

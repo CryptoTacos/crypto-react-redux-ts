@@ -1,12 +1,18 @@
+
+/*
 import WelcomeChat from '../chat/WelcomeChat';
 import { IMessage } from '../types';
+*/
 
+/*
 let welcomeChat: WelcomeChat;
 
 beforeEach(() => {
     welcomeChat = new WelcomeChat();
 });
+*/
 
+/*
 it('sends a message and the message exists in the dictionary', () => {
     const message: IMessage = welcomeChat.sendWelcomeMessage();
     const addedMessage: IMessage | undefined = welcomeChat.getMessageByKey(message.key);
@@ -25,3 +31,4 @@ it('deletes all message from the chat object', () => {
         throw new Error('Messages are not cleared');
     }
 });
+*/
