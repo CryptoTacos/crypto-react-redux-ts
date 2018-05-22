@@ -1,8 +1,9 @@
-import { HistoricalCoinData, FlattenedCoinData } from '.';
+import { HistoricalCoinData, FlattenedCoinData, IWelcomeChatState } from '.';
 
-interface StoreState {
+interface IStoreState {
     marketData: MarketDataState;
     coinDashboard: CoinDashboardState;
+    welcomeChatState: IWelcomeChatState;
 }
 
 interface MenuBarState {
@@ -26,7 +27,7 @@ interface CoinDashboardState {
 }
 
 export {
-    StoreState,
+    IStoreState,
     MenuBarState,
     CryptoMarketCapListState,
     MarketDataState,

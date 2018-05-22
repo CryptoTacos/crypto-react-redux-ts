@@ -3,7 +3,7 @@ import {
     CurrentMarketDataAction, fetchCurrentMarketData, SetCurrentMarketData, GetCurrentMarketData, setCurrentMarketData
 } from '../actions/currentMarketDataActions';
 import { Epic } from 'redux-observable';
-import { StoreState } from '../types';
+import { IStoreState } from '../types';
 import { Observable } from 'rxjs';
 import {
     HistoricalMarketDataActions, SetHistoricalMarketData,
@@ -12,10 +12,10 @@ import {
 
 /**
  * Fetch the latest market data
- * @param action$ 
+ * @param action$
  * @param state$
  */
-const fetchLatestMarketDataEpic: Epic<CurrentMarketDataAction, StoreState> =
+const fetchLatestMarketDataEpic: Epic<CurrentMarketDataAction, IStoreState> =
     (action$, state$): Observable<SetCurrentMarketData> => {
         return action$
             .ofType<GetCurrentMarketData>(GET_CURRENT_MARKET_DATA)
@@ -31,9 +31,9 @@ const fetchLatestMarketDataEpic: Epic<CurrentMarketDataAction, StoreState> =
 
 /**
  * Fetch historical market data
- * @param action$ 
+ * @param action$
  */
-const fetchHistoricalMarketDataEpic: Epic<HistoricalMarketDataActions, StoreState> =
+const fetchHistoricalMarketDataEpic: Epic<HistoricalMarketDataActions, IStoreState> =
     (action$, state$): Observable<SetHistoricalMarketData> =>
         action$
             .ofType<GetHistoricalMarketData>(GET_HISTORICAL_MARKET_DATA)

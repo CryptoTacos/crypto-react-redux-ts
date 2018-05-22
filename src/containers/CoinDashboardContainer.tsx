@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { connect, Dispatch } from 'react-redux';
 import {
-    StoreState, FlattenedCoinData, HistoricalCoinData,
+    IStoreState, FlattenedCoinData, HistoricalCoinData,
     HistoricalCoinDataForCandlestickChart
 } from '../types';
 import * as actions from '../actions/coinDashboardActions';
@@ -70,7 +70,7 @@ interface DispatchFromProps {
 
 }
 
-const mapStateToProps = (state: StoreState): StateFromProps => ({
+const mapStateToProps = (state: IStoreState): StateFromProps => ({
     coinData: state.marketData.currentMarketData,
     historicalData: state.marketData.historicalMarketData,
 });
