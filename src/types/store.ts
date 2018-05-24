@@ -1,9 +1,9 @@
-import { HistoricalCoinData, FlattenedCoinData, IWelcomeChatState } from '.';
+import { HistoricalCoinData, FlattenedCoinData, IChatState, IMessage } from '.';
 
 interface IStoreState {
     marketData: MarketDataState;
     coinDashboard: CoinDashboardState;
-    welcomeChatState: IWelcomeChatState;
+    chatState: IChatState<IMessage>;
 }
 
 interface MenuBarState {

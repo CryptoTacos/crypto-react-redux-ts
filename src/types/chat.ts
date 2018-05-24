@@ -2,7 +2,7 @@ import { IMessage } from '.';
 import Avatar from '../components/chat/Avatar';
 import {
     ADD_MESSAGES_TO_CHAT, SET_CURRENT_CHAT, ADD_MESSAGE_TO_CHAT,
-    CLEAR_MESSAGES, CREATE_NEW_MESSAGE
+    CLEAR_MESSAGES, CREATE_NEW_MESSAGE, CREATE_NEW_MESSAGES, CLEAR_MESSAGE
 } from '../constants';
 
 export interface IChatState<M extends IBaseMessage> {
@@ -29,8 +29,9 @@ export type ChatBotAction<M extends IBaseMessage> =
     | ISetCurrentChat
     | IAddMessageToChat<M>
     | ICreateNewMessage
-    | IClearMessages;
-// | ThunkAction<IAddMessageToChat<M>, IStoreState, void>;
+    | IClearMessages
+    | ICreateNewMessages
+    | IClearMessage;
 
 interface IChatAction {
 }
@@ -46,18 +47,28 @@ export interface IAddMessageToChat<M extends IBaseMessage> extends IChatAction {
     message: M;
     chatName: ChatName;
 }
+export interface ISetCurrentChat extends IChatAction {
+    type: SET_CURRENT_CHAT;
+    chatName: ChatName;
+}
 
 export interface ICreateNewMessage extends IChatAction {
     type: CREATE_NEW_MESSAGE;
     messageText: string;
 }
 
-export interface ISetCurrentChat extends IChatAction {
-    type: SET_CURRENT_CHAT;
+export interface ICreateNewMessages extends IChatAction {
+    type: CREATE_NEW_MESSAGES;
+    messageTexts: string[];
 }
 
 export interface IClearMessages extends IChatAction {
     type: CLEAR_MESSAGES;
+}
+
+export interface IClearMessage extends IChatAction {
+    type: CLEAR_MESSAGE;
+    messageId: number;
 }
 
 export interface IBaseMessage {

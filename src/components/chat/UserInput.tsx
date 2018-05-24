@@ -42,7 +42,7 @@ class UserInput extends React.Component<IUserInputProps, IUserInputState> {
 
     render() {
         return (
-            <div>
+            <div id="user-chat-input">
                 <TextField
                     value={this.state.inputValue}
                     onKeyPress={this.keyPress}

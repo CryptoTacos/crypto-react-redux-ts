@@ -1,10 +1,12 @@
-import { IAddMessageToChat, IMessage, IBaseMessage, IStoreState, ChatName, ICreateNewMessage } from '../types';
-import { ADD_MESSAGE_TO_CHAT, CREATE_NEW_MESSAGE } from '../constants';
-import { Dispatch } from 'redux';
+import {
+    IAddMessageToChat,
+    IMessage, ChatName, ICreateNewMessage, ICreateNewMessages, IClearMessages, IClearMessage
+} from '../types';
+import {
+    ADD_MESSAGE_TO_CHAT,
+    CREATE_NEW_MESSAGE, CREATE_NEW_MESSAGES, CLEAR_MESSAGES, CLEAR_MESSAGE
+} from '../constants';
 import ChatFactory from '../chat/ChatFactory';
-
-export type AddMessageToChatThunk<M extends IBaseMessage> =
-    (dispatch: Dispatch<IAddMessageToChat<M>>, getState: () => IStoreState) => IAddMessageToChat<M>;
 
 /**
  * Send a custom message object, with or without a key,
@@ -34,5 +36,36 @@ export function createNewMessage(messageText: string): ICreateNewMessage {
     return {
         type: CREATE_NEW_MESSAGE,
         messageText,
+    };
+}
+
+/**
+ * Create multiple new messages and add them to the chat
+ * @param messageTexts
+ */
+export function createNewMessages(messageTexts: string[]): ICreateNewMessages {
+    return {
+        type: CREATE_NEW_MESSAGES,
+        messageTexts,
+    };
+}
+
+/**
+ * Clear all messages from chat
+ */
+export function clearMessages(): IClearMessages {
+    return {
+        type: CLEAR_MESSAGES,
+    };
+}
+
+/**
+ * Remove a message from the chat by message id
+ * @param messageId
+ */
+export function clearMessage(messageId: number): IClearMessage {
+    return {
+        type: CLEAR_MESSAGE,
+        messageId,
     };
 }
