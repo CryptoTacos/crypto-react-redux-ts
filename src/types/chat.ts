@@ -5,10 +5,10 @@ import { ADD_MESSAGES_TO_CURRENT_CHAT, SET_CURRENT_CHAT } from '../constants';
 export interface ChatState {
     currentChat: ChatName;
     messagesInChat: IMessage[];
-    chats: Chats;
+    chats: ChatMap;
 }
 
-export type Chats = {
+export type ChatMap = {
     [C in ChatName]: Chat;
 };
 
