@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Dispatch } from 'redux';
-import { IStoreState, IMessage, ChatBotAction, } from '../types';
+import { IStoreState, IMessage, ChatBotAction, IChatState } from '../types';
 import { connect } from 'react-redux';
 import Message from '../components/chat/Message';
 import UserInput from '../components/chat/UserInput';
@@ -10,6 +10,7 @@ interface ChatContainerProps {
   messages: IMessage[];
   onEnterMessage: (message: string) => void;
   onDeleteMessage: (messageId: number) => void;
+  chatState: IChatState<IMessage>;
 }
 
 interface ChatContainerState {
@@ -24,7 +25,8 @@ class ChatContainer extends React.Component<ChatContainerProps, ChatContainerSta
   }
 
   renderMessages = (): JSX.Element[] => {
-    return this.props.messages.map((message: IMessage) => {
+    const messages = this.props.chatState.chats[this.props.chatState.currentChat].messages;
+    return messages.map((message: IMessage) => {
       return (
         <div key={message.key}>
           <Message
@@ -55,6 +57,7 @@ class ChatContainer extends React.Component<ChatContainerProps, ChatContainerSta
 }
 
 interface StateFromProps {
+  chatState: IChatState<IMessage>;
   messages: IMessage[];
 }
 
@@ -62,9 +65,10 @@ interface DispatchFromProps {
   onEnterMessage: (message: string) => void;
   onDeleteMessage: (messageId: number) => void;
 }
-
 const mapStateToProps = (state: IStoreState): StateFromProps => ({
-  messages: state.chatState[state.chatState.currentChat] ? state.chatState[state.chatState.currentChat] : [],
+  chatState: state.chatState,
+  messages: state.chatState.chats[state.chatState.currentChat].messages ?
+    state.chatState.chats[state.chatState.currentChat].messages : [],
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<ChatBotAction<IMessage>>):

@@ -8,21 +8,26 @@ import {
 export interface IChatState<M extends IBaseMessage> {
     currentChat: ChatName;
     messages: M[];
+    chats: ChatMap;
 }
 
 export interface IWelcomeChatState extends IChatState<IMessage> {
 
+    messagesInChat: IMessage[];
+    chats: ChatMap;
 }
 
-export interface Welcome {
+export type ChatMap = {
+    [C in ChatName]: Chat;
+};
+
+export interface Chat {
     messages: IMessage[];
 }
 
-export enum ChatName {
-    DEFAULT = 'DEFAULT',
-    WELCOME = 'WELCOME',
-    HOME_LOGGED_IN = 'HOME_LOGGED_IN',
-}
+export type ChatName =
+    'welcome'
+    | 'homeLoggedIn';
 
 export type ChatBotAction<M extends IBaseMessage> =
     IAddMessagesToChat

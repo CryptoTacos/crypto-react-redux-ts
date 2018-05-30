@@ -1,13 +1,30 @@
-import { ChatName, ChatBotAction, IMessage, IChatState, } from '../types';
+import { IChatState, ChatBotAction, IMessage } from '../types';
 import {
-    SET_CURRENT_CHAT, ADD_MESSAGE_TO_CHAT,
-    ADD_MESSAGES_TO_CHAT, CLEAR_MESSAGES, CLEAR_MESSAGE
+    SET_CURRENT_CHAT, ADD_MESSAGES_TO_CHAT, ADD_MESSAGE_TO_CHAT, CLEAR_MESSAGES, CLEAR_MESSAGE
 } from '../constants';
 
 const initialState: IChatState<IMessage> = {
-    currentChat: ChatName.WELCOME,
+    currentChat: 'welcome',
     messages: [],
-
+    chats: {
+        welcome: {
+            messages: [{
+                key: 1,
+                sentOrReceived: 'sent',
+                messageText: 'Hello',
+                sender: 'client',
+            },
+            {
+                key: 2,
+                sentOrReceived: 'sent',
+                messageText: 'World!',
+                sender: 'server',
+            }]
+        },
+        homeLoggedIn: {
+            messages: [],
+        },
+    }
 };
 
 const chatStateReducer = (state = initialState, action: ChatBotAction<IMessage>): IChatState<IMessage> => {
@@ -23,19 +40,31 @@ const chatStateReducer = (state = initialState, action: ChatBotAction<IMessage>)
         case ADD_MESSAGES_TO_CHAT:
             return {
                 ...state,
-                [state.currentChat]: [
-                    ...state.messages,
-                    action.messages,
-                ],
+                chats: {
+                    ...state.chats,
+                    [state.currentChat]: {
+                        ...[state.chats[state.currentChat]],
+                        messages: [
+                            ...[state.chats[state.currentChat].messages],
+                            action.messages
+                        ],
+                    }
+                }
             };
 
         case ADD_MESSAGE_TO_CHAT:
             return {
                 ...state,
-                [state.currentChat]: [
-                    ...state[state.currentChat] ? state[state.currentChat] : [],
-                    action.message,
-                ],
+                chats: {
+                    ...state.chats,
+                    [state.currentChat]: {
+                        ...[state.chats[state.currentChat]],
+                        messages: [
+                            ...[state.chats[state.currentChat].messages],
+                            action.message
+                        ],
+                    }
+                }
             };
 
         case CLEAR_MESSAGES:
