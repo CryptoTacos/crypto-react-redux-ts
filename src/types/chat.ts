@@ -71,8 +71,11 @@ export interface IClearMessage extends IChatAction {
     messageId: number;
 }
 
+export type sender = 'client' | 'server';
+
 export interface IBaseMessage {
     key: number;
+    sender: sender;
 }
 
 export interface IBaseMessageMap<T extends IBaseMessage> {
@@ -81,6 +84,10 @@ export interface IBaseMessageMap<T extends IBaseMessage> {
 
 export interface IMessageMap extends IBaseMessageMap<IMessage> {
 
+}
+
+export interface IBotMessage extends IMessage {
+    messageType: string;
 }
 
 export interface IMessage extends IBaseMessage {

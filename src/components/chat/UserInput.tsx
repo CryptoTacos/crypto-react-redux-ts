@@ -1,6 +1,12 @@
 import * as React from 'react';
-import { TextField, IconButton } from 'material-ui';
-
+// import IconButton from '@material-ui/core/IconButton';
+// import Icon from '@material-ui/core/Icon';
+// import InputAdornment from '@material-ui/core/InputAdornment';
+import Input from '@material-ui/core/Input';
+import IconButton from '@material-ui/core/IconButton';
+import InputAdornment from '@material-ui/core/InputAdornment';
+// import Icon from '@material-ui/core/Icon';
+import Send from '@material-ui/icons/Send';
 interface IUserInputProps {
     onEnterMessage: (message: string) => void;
 }
@@ -34,24 +40,32 @@ class UserInput extends React.Component<IUserInputProps, IUserInputState> {
         }
     }
 
-    inputChange = (event: React.FormEvent<{}>, newValue: string): void => {
+    handleChange = (event: any) => {
         this.setState({
-            inputValue: newValue,
+            inputValue: event.target.value,
         });
     }
 
     render() {
         return (
-            <div id="user-chat-input">
-                <TextField
-                    value={this.state.inputValue}
+            <div>
+                <Input
+                    fullWidth={true}
+                    placeholder={'Enter a message...'}
                     onKeyPress={this.keyPress}
-                    onChange={this.inputChange}
+                    value={this.state.inputValue}
+                    onChange={this.handleChange}
+                    endAdornment={
+                        <InputAdornment position="end" >
+                            <IconButton
+                                onClick={this.clickSend}
+                            >
+                                <Send />
+                            </IconButton>
+                        </InputAdornment>
+                    }
                 />
-                <IconButton
-                    iconClassName="fa fa-chevron-right"
-                    onClick={this.clickSend}
-                />
+
             </div>
         );
     }

@@ -1,7 +1,8 @@
 
 import * as React from 'react';
 import { IMessage } from '../../types';
-import { IconButton } from 'material-ui';
+import IconButton from '@material-ui/core/IconButton';
+import Icon from '@material-ui/core/Icon';
 
 interface MessageProps extends IMessage {
     messageId: number;
@@ -28,9 +29,10 @@ class Message extends React.Component<MessageProps, MessageState> {
                 {this.props.messageText}
                 {this.props.children}
                 <IconButton
-                    iconClassName="fa fa-times"
                     onClick={this.clickDelete}
-                />
+                >
+                    <Icon className="fa fa-times" />
+                </IconButton>
             </div>
         );
     }

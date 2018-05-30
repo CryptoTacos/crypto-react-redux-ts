@@ -22,6 +22,7 @@ export function addMessageToChat(messageText: string, chatName: ChatName): IAddM
             messageText: messageText,
             key: ChatFactory.generateNewKey(),
             sentOrReceived: 'sent',
+            sender: 'server',
         },
         chatName,
     };

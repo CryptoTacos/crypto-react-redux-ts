@@ -1,0 +1,15 @@
+.chat-container {
+    width: 100%;
+    height: 500px;
+    .user-chat-input {
+        width: 100%;
+        height: 100%;
+    }
+    .message {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        &-client {}
+        &-server {}
+    }
+}

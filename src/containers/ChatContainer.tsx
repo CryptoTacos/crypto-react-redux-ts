@@ -20,24 +20,29 @@ class ChatContainer extends React.Component<ChatContainerProps, ChatContainerSta
   constructor(props: ChatContainerProps) {
     super(props);
     this.state = {};
+    console.log('trying to construct');
   }
 
   renderMessages = (): JSX.Element[] => {
     return this.props.messages.map((message: IMessage) => {
       return (
-        <Message
-          key={message.key}
-          messageId={message.key}
-          sentOrReceived={message.sentOrReceived}
-          messageText={message.messageText}
-          avatar={message.avatar}
-          clickDeleteMessage={this.props.onDeleteMessage}
-        />
+        <div key={message.key}>
+          <Message
+            key={message.key}
+            messageId={message.key}
+            sentOrReceived={message.sentOrReceived}
+            sender={message.sender}
+            messageText={message.messageText}
+            avatar={message.avatar}
+            clickDeleteMessage={this.props.onDeleteMessage}
+          />
+        </div>
       );
     });
   }
 
   render() {
+    console.log('rendering');
     return (
       <div>
         {this.renderMessages()}
