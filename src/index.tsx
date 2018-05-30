@@ -6,15 +6,11 @@ import 'font-awesome/css/font-awesome.min.css';
 import './scss/App.scss';
 import App from './components/App';
 import { BrowserRouter as Router, } from 'react-router-dom';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
+import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 import configureStore from './store';
 import { getCurrentMarketData } from './actions/currentMarketDataActions';
-// import { HistoricalDataType, getHistoricalMarketData } from './actions/historicalMarketDataActions';
 import { getUserPinnedCoins } from './actions/coinDashboardActions';
-// import { HistoricalCoinData } from './types';
-// import { getHistoricalMarketDataByDay, setHistoricalMarketData } from './actions/historicalMarketDataActions';
+import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
 
 const store = configureStore();
 
@@ -35,13 +31,20 @@ store.dispatch(getUserPinnedCoins('testhash'));
 store.dispatch(getCurrentMarketData());
 // store.dispatch(getHistoricalMarketData(HistoricalDataType.HOURLY));
 
+const theme = createMuiTheme({
+  palette: {
+    type: 'light',
+  },
+});
 ReactDOM.render(
   <Provider store={store}>
     <Router>
       <MuiThemeProvider
-        muiTheme={getMuiTheme(lightBaseTheme)}
+        theme={theme}
       >
-        <App />
+        <div>
+          <App />
+        </div>
       </MuiThemeProvider>
     </Router>
   </Provider>,
