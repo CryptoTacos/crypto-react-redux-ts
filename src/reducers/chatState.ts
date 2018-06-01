@@ -43,9 +43,9 @@ const chatStateReducer = (state = initialState, action: ChatBotAction<IMessage>)
                 chats: {
                     ...state.chats,
                     [state.currentChat]: {
-                        ...[state.chats[state.currentChat]],
+                        ...state.chats[state.currentChat],
                         messages: [
-                            ...[state.chats[state.currentChat].messages],
+                            ...state.chats[state.currentChat].messages,
                             action.messages
                         ],
                     }
@@ -58,9 +58,9 @@ const chatStateReducer = (state = initialState, action: ChatBotAction<IMessage>)
                 chats: {
                     ...state.chats,
                     [state.currentChat]: {
-                        ...[state.chats[state.currentChat]],
+                        ...state.chats[state.currentChat],
                         messages: [
-                            ...[state.chats[state.currentChat].messages],
+                            ...state.chats[state.currentChat].messages,
                             action.message
                         ],
                     }
@@ -70,19 +70,30 @@ const chatStateReducer = (state = initialState, action: ChatBotAction<IMessage>)
         case CLEAR_MESSAGES:
             return {
                 ...state,
-                [state.currentChat]: [],
+                chats: {
+                    ...state.chats,
+                    [state.currentChat]: Object.assign({}),
+                },
             };
 
         case CLEAR_MESSAGE:
-            const deleteIndex = (state[state.currentChat] as IMessage[]).findIndex((message) => {
-                return message.key === action.messageId;
-            });
+            const deleteIndex = state.chats[state.currentChat].messages.findIndex(
+                message => message.key === action.messageId);
+
             return {
                 ...state,
-                [state.currentChat]: [
-                    ...state[state.currentChat].slice(0, deleteIndex),
-                    ...state[state.currentChat].slice(deleteIndex + 1, state[state.currentChat].length),
-                ],
+                chats: {
+                    ...state.chats,
+                    [state.currentChat]: {
+                        ...state.chats[state.currentChat],
+                        messages: [
+                            ...state.chats[state.currentChat].messages.slice(
+                                0, deleteIndex),
+                            ...state.chats[state.currentChat].messages.slice(
+                                deleteIndex + 1, state.chats[state.currentChat].messages.length),
+                        ]
+                    }
+                },
             };
 
         default:
