@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import Message from '../components/chat/Message';
 import UserInput from '../components/chat/UserInput';
 import { createNewMessage, clearMessage } from '../actions/chatBotActions';
+import ChatHeader from '../components/chat/ChatHeader';
+import ChatFooter from '../components/chat/ChatFooter';
 
 interface ChatContainerProps {
   messages: IMessage[];
@@ -28,7 +30,7 @@ class ChatContainer extends React.Component<ChatContainerProps, ChatContainerSta
     const messages = this.props.chatState.chats[this.props.chatState.currentChat].messages;
     return messages.map((message: IMessage) => {
       return (
-        <div key={message.key}>
+        <div key={message.key} className={`chat-message-row-${message.sender}`}>
           <Message
             key={message.key}
             messageId={message.key}
@@ -47,10 +49,12 @@ class ChatContainer extends React.Component<ChatContainerProps, ChatContainerSta
     console.log('rendering');
     return (
       <div>
+        <ChatHeader />
         {this.renderMessages()}
         <UserInput
           onEnterMessage={this.props.onEnterMessage}
         />
+        <ChatFooter />
       </div>
     );
   }

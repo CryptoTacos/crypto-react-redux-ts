@@ -8,18 +8,7 @@ const initialState: IChatState<IMessage> = {
     messages: [],
     chats: {
         welcome: {
-            messages: [{
-                key: 1,
-                sentOrReceived: 'sent',
-                messageText: 'Hello',
-                sender: 'client',
-            },
-            {
-                key: 2,
-                sentOrReceived: 'sent',
-                messageText: 'World!',
-                sender: 'server',
-            }]
+            messages: []
         },
         homeLoggedIn: {
             messages: [],
