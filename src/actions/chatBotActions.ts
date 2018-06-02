@@ -1,12 +1,25 @@
 import {
     IAddMessageToChat,
-    IMessage, ChatName, ICreateNewMessage, ICreateNewMessages, IClearMessages, IClearMessage, IGetChatServerResponse
+    IMessage, ChatName, ICreateNewMessage,
+    ICreateNewMessages, IClearMessages, IClearMessage,
+    IGetChatServerResponse, ISetCurrentChat, IBotMessage, sender
 } from '../types';
 import {
     ADD_MESSAGE_TO_CHAT,
-    CREATE_NEW_MESSAGE, CREATE_NEW_MESSAGES, CLEAR_MESSAGES, CLEAR_MESSAGE, GET_CHAT_SERVER_RESPONSE
+    CREATE_NEW_MESSAGE, CREATE_NEW_MESSAGES, CLEAR_MESSAGES, CLEAR_MESSAGE, GET_CHAT_SERVER_RESPONSE, SET_CURRENT_CHAT
 } from '../constants';
 import ChatFactory from '../chat/ChatFactory';
+
+/**
+ * Set the context of the chat window for a specific chat
+ * @param chat
+ */
+export function setCurrentChat(chatName: ChatName): ISetCurrentChat {
+    return {
+        type: SET_CURRENT_CHAT,
+        chatName
+    };
+}
 
 /**
  * Send a custom message object, with or without a key,
@@ -15,14 +28,15 @@ import ChatFactory from '../chat/ChatFactory';
  * @param messageText
  * @returns {IAddMessageToChat<IMessage>}
  */
-export function addMessageToChat(messageText: string, chatName: ChatName): IAddMessageToChat<IMessage> {
+export function addMessageToChat(messageText: string, chatName: ChatName, chatSender?: sender):
+    IAddMessageToChat<IMessage> {
     return {
         type: ADD_MESSAGE_TO_CHAT,
         message: {
             messageText: messageText,
             key: ChatFactory.generateNewKey(),
             sentOrReceived: 'sent',
-            sender: 'client',
+            sender: chatSender ? chatSender : 'client',
         },
         chatName,
     };
@@ -71,9 +85,32 @@ export function clearMessage(messageId: number): IClearMessage {
     };
 }
 
+/**
+ * Trigger epic to get and set the server response based on message text
+ * @param messageText
+ */
 export function getServerResponse(messageText: string): IGetChatServerResponse {
     return {
         type: GET_CHAT_SERVER_RESPONSE,
         messageText,
+    };
+}
+
+/**
+ * Add a message to chat indicating that the client made an invalid response based upon
+ * the trigger condition of the chat bot's previous message
+ * @param chatName
+ */
+export function invalidClientResponse(chatName: ChatName): IAddMessageToChat<IBotMessage> {
+    return {
+        type: ADD_MESSAGE_TO_CHAT,
+        message: {
+            messageText: 'Please provide a valid response',
+            key: ChatFactory.generateNewKey(),
+            sentOrReceived: 'sent',
+            sender: 'server',
+            trigger: (messageText: string) => true,
+        },
+        chatName,
     };
 }

@@ -4,7 +4,7 @@ import { IStoreState, IMessage, ChatBotAction, IChatState } from '../types';
 import { connect } from 'react-redux';
 import Message from '../components/chat/Message';
 import UserInput from '../components/chat/UserInput';
-import { createNewMessage, clearMessage } from '../actions/chatBotActions';
+import { createNewMessage, clearMessage, getServerResponse } from '../actions/chatBotActions';
 import ChatHeader from '../components/chat/ChatHeader';
 import ChatFooter from '../components/chat/ChatFooter';
 
@@ -79,6 +79,7 @@ const mapDispatchToProps = (dispatch: Dispatch<ChatBotAction<IMessage>>):
   DispatchFromProps => ({
     onEnterMessage: (message: string) => {
       dispatch(createNewMessage(message));
+      dispatch(getServerResponse(message));
     },
     onDeleteMessage: (messageId: number) => {
       dispatch(clearMessage(messageId));

@@ -20,7 +20,7 @@ const fetchLatestMarketDataEpic: Epic<CurrentMarketDataAction, IStoreState> =
         return action$
             .ofType<GetCurrentMarketData>(GET_CURRENT_MARKET_DATA)
             .mergeMap(() =>
-                Observable.interval(6000)
+                Observable.interval(600000)
                     .mergeMap(() =>
                         Observable.from(fetchCurrentMarketData(state$.getState().coinDashboard.pinnedCoins))
                             // tslint:disable-next-line:no-any

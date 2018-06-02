@@ -11,6 +11,7 @@ import configureStore from './store';
 import { getCurrentMarketData } from './actions/currentMarketDataActions';
 import { getUserPinnedCoins } from './actions/coinDashboardActions';
 import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
+import { setCurrentChat } from './actions/chatBotActions';
 
 const store = configureStore();
 
@@ -29,6 +30,7 @@ for (const coin of cryptoCurrencies) {
 
 store.dispatch(getUserPinnedCoins('testhash'));
 store.dispatch(getCurrentMarketData());
+store.dispatch(setCurrentChat('welcome'));
 // store.dispatch(getHistoricalMarketData(HistoricalDataType.HOURLY));
 
 const theme = createMuiTheme({

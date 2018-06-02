@@ -9,5 +9,4 @@ export default combineReducers<IStoreState>({
     marketData: marketDataReducer,
     coinDashboard: coinDashboardReducer,
     chatState: chatStateReducer,
-    welcomeChatState: chatStateReducer,
 });

@@ -10,8 +10,12 @@ import {
     CREATE_NEW_MESSAGE, CREATE_NEW_MESSAGES,
     CLEAR_MESSAGES, CLEAR_MESSAGE, GET_CHAT_SERVER_RESPONSE
 } from '../constants';
-import { addMessageToChat, createNewMessages, clearMessages, clearMessage } from '../actions/chatBotActions';
+import {
+    addMessageToChat, createNewMessages,
+    clearMessages, clearMessage, invalidClientResponse
+} from '../actions/chatBotActions';
 import { MiddlewareAPI } from 'redux';
+import ChatAPI from '../chat/ChatAPI';
 
 /**
  * Create a new message and add it to the chat
@@ -62,10 +66,26 @@ function clearMessageEpic(action$: ActionsObservable<ChatBotAction<IMessage>>, s
         });
 }
 
-function serverResponseEpic(action$: ActionsObservable<ChatBotAction<IMessage>>, store: MiddlewareAPI<IStoreState>) {
+/**
+ * Based upon the response of the user generate a chat bot's response through
+ * this epic
+ * @param action$
+ * @param store
+ */
+function chatBotResponseEpic(action$: ActionsObservable<ChatBotAction<IMessage>>, store: MiddlewareAPI<IStoreState>) {
     return action$.ofType<IGetChatServerResponse>(GET_CHAT_SERVER_RESPONSE)
-        .map(() => {
-            return clearMessage(123);
+        .map((action) => {
+            console.log('inside server response epic');
+            const currentStepMessage = ChatAPI.getCurrentStepMessage();
+            if (currentStepMessage.trigger(action.messageText)) {
+                return (
+                    addMessageToChat(currentStepMessage.messageText, store.getState().chatState.currentChat, 'server')
+                );
+            } else {
+                ChatAPI.reverseStep();
+                return (invalidClientResponse(store.getState().chatState.currentChat));
+            }
+
         });
 }
 
@@ -74,5 +94,5 @@ export {
     createNewMessagesEpic,
     clearMessagesEpic,
     clearMessageEpic,
-    serverResponseEpic,
+    chatBotResponseEpic,
 };

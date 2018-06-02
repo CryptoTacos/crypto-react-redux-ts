@@ -2,6 +2,7 @@ import { IChatState, ChatBotAction, IMessage } from '../types';
 import {
     SET_CURRENT_CHAT, ADD_MESSAGES_TO_CHAT, ADD_MESSAGE_TO_CHAT, CLEAR_MESSAGES, CLEAR_MESSAGE
 } from '../constants';
+import ChatAPI from '../chat/ChatAPI';
 
 const initialState: IChatState<IMessage> = {
     currentChat: 'welcome',
@@ -20,9 +21,20 @@ const chatStateReducer = (state = initialState, action: ChatBotAction<IMessage>)
 
     switch (action.type) {
         case SET_CURRENT_CHAT: {
+            const initialMessage = ChatAPI.getCurrentStepMessage();
             return {
                 ...state,
                 currentChat: action.chatName,
+                chats: {
+                    ...state.chats,
+                    [state.currentChat]: {
+                        ...state.chats[state.currentChat],
+                        messages: [
+                            ...state.chats[state.currentChat].messages,
+                            initialMessage,
+                        ],
+                    }
+                }
             };
         }
 

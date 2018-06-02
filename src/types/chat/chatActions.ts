@@ -20,6 +20,11 @@ type ChatBotAction<M extends IBaseMessage> =
 interface IChatAction {
 }
 
+interface ISetCurrentChat {
+    type: SET_CURRENT_CHAT;
+    chatName: ChatName;
+}
+
 interface IAddMessagesToChat extends IChatAction {
     type: ADD_MESSAGES_TO_CHAT;
     messages: IMessage[];
@@ -29,10 +34,6 @@ interface IAddMessagesToChat extends IChatAction {
 interface IAddMessageToChat<M extends IBaseMessage> extends IChatAction {
     type: ADD_MESSAGE_TO_CHAT;
     message: M;
-    chatName: ChatName;
-}
-interface ISetCurrentChat extends IChatAction {
-    type: SET_CURRENT_CHAT;
     chatName: ChatName;
 }
 

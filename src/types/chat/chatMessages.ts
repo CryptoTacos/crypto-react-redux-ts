@@ -9,11 +9,11 @@ interface IBaseMessage {
 interface IMessage extends IBaseMessage {
     sentOrReceived: 'sent' | 'received';
     avatar?: Avatar;
-    messageText?: string;
+    messageText: string;
 }
 
 interface IBotMessage extends IMessage {
-    messageType: string;
+    trigger: (messageText: string) => boolean;
 }
 
 export {
