@@ -5,7 +5,7 @@ class ChatAPI {
     public static steps: IBotMessage[] = [
         {
             key: 0,
-            messageText: 'Welcome to Jeff and Dan\'s chat bot!',
+            messageText: 'Welcome to Jeff and Dan\'s chat bot 😃',
             trigger: (messageText: string) => true,
             sentOrReceived: 'sent',
             sender: 'server',
