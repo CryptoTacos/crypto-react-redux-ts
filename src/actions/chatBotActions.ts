@@ -1,10 +1,10 @@
 import {
     IAddMessageToChat,
-    IMessage, ChatName, ICreateNewMessage, ICreateNewMessages, IClearMessages, IClearMessage
+    IMessage, ChatName, ICreateNewMessage, ICreateNewMessages, IClearMessages, IClearMessage, IGetChatServerResponse
 } from '../types';
 import {
     ADD_MESSAGE_TO_CHAT,
-    CREATE_NEW_MESSAGE, CREATE_NEW_MESSAGES, CLEAR_MESSAGES, CLEAR_MESSAGE
+    CREATE_NEW_MESSAGE, CREATE_NEW_MESSAGES, CLEAR_MESSAGES, CLEAR_MESSAGE, GET_CHAT_SERVER_RESPONSE
 } from '../constants';
 import ChatFactory from '../chat/ChatFactory';
 
@@ -68,5 +68,12 @@ export function clearMessage(messageId: number): IClearMessage {
     return {
         type: CLEAR_MESSAGE,
         messageId,
+    };
+}
+
+export function getServerResponse(messageText: string): IGetChatServerResponse {
+    return {
+        type: GET_CHAT_SERVER_RESPONSE,
+        messageText,
     };
 }

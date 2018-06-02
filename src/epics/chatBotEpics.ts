@@ -2,10 +2,14 @@
 import { ActionsObservable } from 'redux-observable';
 import {
     IStoreState, ChatBotAction,
-    IMessage, IAddMessageToChat, ICreateNewMessage, ICreateNewMessages, IClearMessages, IClearMessage
+    IMessage, IAddMessageToChat, ICreateNewMessage,
+    ICreateNewMessages, IClearMessages, IClearMessage, IGetChatServerResponse
 } from '../types';
 import { Observable } from 'rxjs';
-import { CREATE_NEW_MESSAGE, CREATE_NEW_MESSAGES, CLEAR_MESSAGES, CLEAR_MESSAGE } from '../constants';
+import {
+    CREATE_NEW_MESSAGE, CREATE_NEW_MESSAGES,
+    CLEAR_MESSAGES, CLEAR_MESSAGE, GET_CHAT_SERVER_RESPONSE
+} from '../constants';
 import { addMessageToChat, createNewMessages, clearMessages, clearMessage } from '../actions/chatBotActions';
 import { MiddlewareAPI } from 'redux';
 
@@ -58,9 +62,17 @@ function clearMessageEpic(action$: ActionsObservable<ChatBotAction<IMessage>>, s
         });
 }
 
+function serverResponseEpic(action$: ActionsObservable<ChatBotAction<IMessage>>, store: MiddlewareAPI<IStoreState>) {
+    return action$.ofType<IGetChatServerResponse>(GET_CHAT_SERVER_RESPONSE)
+        .map(() => {
+            return clearMessage(123);
+        });
+}
+
 export {
     createNewMessageEpic,
     createNewMessagesEpic,
     clearMessagesEpic,
     clearMessageEpic,
+    serverResponseEpic,
 };
