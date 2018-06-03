@@ -4,7 +4,6 @@ import NavBar from './NavBar';
 import About from './About';
 import Welcome from './Welcome';
 import '../scss/App.scss';
-import CoinDashboardContainer from '../containers/CoinDashboardContainer';
 
 function App() {
   return (
@@ -13,17 +12,17 @@ function App() {
       <Route
         exact={true}
         path="/"
-        render={() => <CoinDashboardContainer />}
+        component={Welcome}
       />
       <Route
         exact={true}
         path="/about"
-        render={About}
+        component={About}
       />
       <Route
         exact={true}
         path="/welcome"
-        render={Welcome}
+        component={Welcome}
       />
     </div>
   );

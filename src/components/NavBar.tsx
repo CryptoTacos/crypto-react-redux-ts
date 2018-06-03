@@ -1,8 +1,10 @@
 import * as React from 'react';
-import AppBar from 'material-ui/AppBar';
-import Drawer from 'material-ui/Drawer';
+import AppBar from '@material-ui/core/AppBar';
+import Drawer from '@material-ui/core/Drawer';
 import * as ReactDOM from 'react-dom';
 import MenuLinkItem from './MenuLinkItem';
+import { Toolbar, IconButton } from '@material-ui/core';
+import MenuIcon from '@material-ui/icons/Menu';
 
 interface NavBarProps {
 
@@ -14,8 +16,8 @@ interface NavBarState {
 export default class NavBar extends React.Component<NavBarProps, NavBarState> {
   private menuDrawerRef: React.ReactInstance;
 
-  constructor() {
-    super();
+  constructor(props: NavBarProps) {
+    super(props);
     this.state = {
       isMenuVisible: false,
     };
@@ -27,18 +29,21 @@ export default class NavBar extends React.Component<NavBarProps, NavBarState> {
     };
   }
 
-  setMenuDrawerRef = (node: Drawer) => {
+  setMenuDrawerRef = (node: any) => {
     this.menuDrawerRef = node;
   }
 
-  handleMenuBtnClick = (e: React.MouseEvent<HTMLElement>) => {
+  handleMenuBtnClick = (e: any) => {
     e.stopPropagation();
     this.setState({ isMenuVisible: !this.state.isMenuVisible });
   }
 
   handleOutsideClick = (e: Event) => {
+
+    const node: Element | Text = ReactDOM.findDOMNode(this.menuDrawerRef)
+      ? ReactDOM.findDOMNode(this.menuDrawerRef) : Object.assign({});
     if (this.menuDrawerRef && e.target instanceof HTMLElement &&
-      !ReactDOM.findDOMNode(this.menuDrawerRef).contains(e.target)) {
+      node.contains(e.target)) {
       this.setState({ isMenuVisible: false });
       console.log('clicked outside menu');
       return;
@@ -48,11 +53,13 @@ export default class NavBar extends React.Component<NavBarProps, NavBarState> {
 
   }
 
+  /* tslint:disable */
   renderMenu = () => {
     return this.state.isMenuVisible ? (
       <Drawer
         open={this.state.isMenuVisible}
-        ref={this.setMenuDrawerRef}
+        innerRef={this.setMenuDrawerRef}
+
       >
         <div
           className="side-menu-drawer"
@@ -70,8 +77,14 @@ export default class NavBar extends React.Component<NavBarProps, NavBarState> {
     return (
       <AppBar
         title="Crypto App"
-        onLeftIconButtonClick={this.handleMenuBtnClick}
+        position="sticky"
       >
+        <Toolbar>
+          <IconButton aria-label="Menu">
+            <MenuIcon
+              onClick={this.handleMenuBtnClick} />
+          </IconButton>
+        </Toolbar>
         {this.renderMenu()}
       </AppBar>
     );

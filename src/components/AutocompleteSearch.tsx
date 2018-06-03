@@ -1,6 +1,5 @@
 import * as React from 'react';
-import AutoComplete from 'material-ui/AutoComplete';
-import MenuItem from 'material-ui/MenuItem';
+import MenuItem from '@material-ui/core/MenuItem';
 
 interface AutoCompleteMenuItem {
     text: string;
@@ -21,17 +20,20 @@ class AutoCompleteSearch extends React.Component<AutoCompleteSearchProps, AutoCo
     }
 
     render() {
+        this.getMenuItems();
         return (
-
-            <AutoComplete
-                floatingLabelText="Search for Coins"
-                filter={AutoComplete.caseInsensitiveFilter}
-                fullWidth={true}
-                dataSource={this.getMenuItems()}
-            />
+            <div />
 
         );
     }
+    /* Autocomplete has been removed in material-ui v1
+        <AutoComplete
+        floatingLabelText="Search for Coins"
+        filter={AutoComplete.caseInsensitiveFilter}
+        fullWidth={true}
+        dataSource={this.getMenuItems()}
+    />
+    */
 
     private getMenuItems = (): AutoCompleteMenuItem[] => {
         const cryptoCurrencies: string[] = require('cryptocurrencies').symbols();
@@ -43,8 +45,6 @@ class AutoCompleteSearch extends React.Component<AutoCompleteSearchProps, AutoCo
                     text: coin,
                     value: (
                         <MenuItem
-                            primaryText={coin}
-                            rightIcon={(<img src={require('../icons/coins/color/' + coin.toLowerCase() + '.svg')} />)}
                         />
                     )
                 });

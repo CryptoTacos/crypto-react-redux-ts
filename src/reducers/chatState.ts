@@ -1,21 +1,15 @@
-import { ChatState, ChatBotAction } from '../types';
-import { ADD_MESSAGES_TO_CURRENT_CHAT, SET_CURRENT_CHAT } from '../constants';
+import { IChatState, ChatBotAction, IMessage } from '../types';
+import {
+    SET_CURRENT_CHAT, ADD_MESSAGES_TO_CHAT, ADD_MESSAGE_TO_CHAT, CLEAR_MESSAGES, CLEAR_MESSAGE
+} from '../constants';
+import ChatAPI from '../chat/ChatAPI';
 
-const initialState: ChatState = {
+const initialState: IChatState<IMessage> = {
     currentChat: 'welcome',
-    messagesInChat: [],
+    messages: [],
     chats: {
         welcome: {
-            messages: [{
-                messageId: 'hello',
-                sentOrReceived: 'sent',
-                messageText: 'Hello'
-            },
-            {
-                messageId: 'world',
-                sentOrReceived: 'sent',
-                messageText: 'World!'
-            }]
+            messages: []
         },
         homeLoggedIn: {
             messages: [],
@@ -23,21 +17,86 @@ const initialState: ChatState = {
     }
 };
 
-const chatStateReducer = (state = initialState, action: ChatBotAction): ChatState => {
+const chatStateReducer = (state = initialState, action: ChatBotAction<IMessage>): IChatState<IMessage> => {
 
     switch (action.type) {
-        case ADD_MESSAGES_TO_CURRENT_CHAT: {
-            return {
-                ...state,
-                [state.currentChat]: state.messagesInChat.concat(action.messages)
-            };
-        }
         case SET_CURRENT_CHAT: {
+            const initialMessage = ChatAPI.getCurrentStepMessage();
             return {
                 ...state,
-                currentChat: action.chatName
+                currentChat: action.chatName,
+                chats: {
+                    ...state.chats,
+                    [state.currentChat]: {
+                        ...state.chats[state.currentChat],
+                        messages: [
+                            ...state.chats[state.currentChat].messages,
+                            initialMessage,
+                        ],
+                    }
+                }
             };
         }
+
+        case ADD_MESSAGES_TO_CHAT:
+            return {
+                ...state,
+                chats: {
+                    ...state.chats,
+                    [state.currentChat]: {
+                        ...state.chats[state.currentChat],
+                        messages: [
+                            ...state.chats[state.currentChat].messages,
+                            action.messages
+                        ],
+                    }
+                }
+            };
+
+        case ADD_MESSAGE_TO_CHAT:
+            return {
+                ...state,
+                chats: {
+                    ...state.chats,
+                    [state.currentChat]: {
+                        ...state.chats[state.currentChat],
+                        messages: [
+                            ...state.chats[state.currentChat].messages,
+                            action.message
+                        ],
+                    }
+                }
+            };
+
+        case CLEAR_MESSAGES:
+            return {
+                ...state,
+                chats: {
+                    ...state.chats,
+                    [state.currentChat]: Object.assign({}),
+                },
+            };
+
+        case CLEAR_MESSAGE:
+            const deleteIndex = state.chats[state.currentChat].messages.findIndex(
+                message => message.key === action.messageId);
+
+            return {
+                ...state,
+                chats: {
+                    ...state.chats,
+                    [state.currentChat]: {
+                        ...state.chats[state.currentChat],
+                        messages: [
+                            ...state.chats[state.currentChat].messages.slice(
+                                0, deleteIndex),
+                            ...state.chats[state.currentChat].messages.slice(
+                                deleteIndex + 1, state.chats[state.currentChat].messages.length),
+                        ]
+                    }
+                },
+            };
+
         default:
             return state;
     }

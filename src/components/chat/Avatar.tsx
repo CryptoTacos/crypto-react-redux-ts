@@ -16,7 +16,7 @@ class Avatar extends React.Component<IAvatarProps, IAvatarState> {
 
     render() {
         return (
-            <div className="message-avatar"/>
+            <div className="message-avatar" />
         );
     }
 }
